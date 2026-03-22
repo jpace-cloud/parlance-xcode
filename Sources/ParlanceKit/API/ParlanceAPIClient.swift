@@ -52,6 +52,7 @@ public class ParlanceAPIClient {
         guard let url = URL(string: baseURL + path) else {
             throw ParlanceAPIError.networkError(URLError(.badURL))
         }
+        print("[Parlance] Requesting: \(method) \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -96,23 +97,23 @@ public class ParlanceAPIClient {
     }
 
     public func testConnection() async throws -> Bool {
-        let request = try makeRequest(path: "/v1/projects")
+        let request = try makeRequest(path: "/api/v1/projects")
         let _: [Project] = try await perform(request)
         return true
     }
 
     public func fetchProjects() async throws -> [Project] {
-        let request = try makeRequest(path: "/v1/projects")
+        let request = try makeRequest(path: "/api/v1/projects")
         return try await perform(request)
     }
 
     public func fetchContracts(projectId: String) async throws -> [Contract] {
-        let request = try makeRequest(path: "/v1/projects/\(projectId)/contracts")
+        let request = try makeRequest(path: "/api/v1/projects/\(projectId)/contracts")
         return try await perform(request)
     }
 
     public func fetchGlossary(projectId: String) async throws -> [GlossaryTerm] {
-        let request = try makeRequest(path: "/v1/projects/\(projectId)/glossary")
+        let request = try makeRequest(path: "/api/v1/projects/\(projectId)/glossary")
         return try await perform(request)
     }
 
@@ -124,7 +125,7 @@ public class ParlanceAPIClient {
             timestamp: formatter.string(from: Date())
         )
         let body = try JSONEncoder().encode(payload)
-        let request = try makeRequest(path: "/v1/projects/\(projectId)/audit", method: "POST", body: body)
+        let request = try makeRequest(path: "/api/v1/projects/\(projectId)/audit", method: "POST", body: body)
         let response: PushResponse = try await perform(request)
         return response.inserted
     }
