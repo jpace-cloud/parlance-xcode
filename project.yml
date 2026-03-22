@@ -18,6 +18,7 @@ targets:
       - path: Sources/ParlanceKit
     settings:
       base:
+        INFOPLIST_FILE: Sources/ParlanceKit/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.kit
         MACOSX_DEPLOYMENT_TARGET: "13.0"
         SWIFT_VERSION: "5.9"
@@ -45,10 +46,6 @@ targets:
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
-        com.apple.security.keychain-access-groups:
-          - $(AppIdentifierPrefix)business.parlance.xcode
-        com.apple.security.application-groups:
-          - group.business.parlance
 
   ParlanceEditor:
     type: xpc-service

@@ -52,7 +52,7 @@ class PushResultsCommand: NSObject, XCSourceEditorCommand {
         }
 
         let client = ParlanceAPIClient(apiKey: apiKey)
-        let projectId = UserDefaults(suiteName: "group.business.parlance")?.string(forKey: "selectedProjectId") ?? ""
+        let projectId = UserDefaults.standard.string(forKey: "selectedProjectId") ?? ""
 
         guard !projectId.isEmpty else {
             invocation.buffer.lines.insert("// PARLANCE: No project selected. Open the Parlance menu bar app and choose a project.\n", at: 0)

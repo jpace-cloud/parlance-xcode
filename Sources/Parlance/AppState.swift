@@ -14,7 +14,7 @@ class AppState: ObservableObject {
     @Published var lastSyncDate: Date? = nil
     @Published var latestAuditSummary: AuditSummary? = nil
 
-    private let sharedDefaults = UserDefaults(suiteName: "group.business.parlance")
+    private let sharedDefaults = UserDefaults.standard
     private var refreshTimer: Timer?
     private var client: ParlanceAPIClient? = nil
 
@@ -67,7 +67,7 @@ class AppState: ObservableObject {
 
     func selectProject(_ project: Project) {
         selectedProject = project
-        sharedDefaults?.set(project.id, forKey: "selectedProjectId")
+        sharedDefaults.set(project.id, forKey: "selectedProjectId")
         Task { await syncData() }
     }
 
@@ -84,7 +84,7 @@ class AppState: ObservableObject {
             let fetched = try await client.fetchProjects()
             projects = fetched
             // Restore previously selected project
-            if let savedId = sharedDefaults?.string(forKey: "selectedProjectId"),
+            if let savedId = sharedDefaults.string(forKey: "selectedProjectId"),
                let match = fetched.first(where: { $0.id == savedId }) {
                 selectedProject = match
                 await syncData()
