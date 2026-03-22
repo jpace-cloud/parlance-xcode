@@ -3,6 +3,7 @@ import ParlanceKit
 
 struct MenuBarView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.openSettings) private var openSettings
     @State private var selectedTab: Tab = .contracts
     @State private var glossarySearch = ""
     @State private var selectedContract: Contract? = nil
@@ -45,7 +46,7 @@ struct MenuBarView: View {
                 .fill(appState.isConnected ? Color.green : Color(NSColor.systemGray))
                 .frame(width: 8, height: 8)
             Button {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                openSettings()
             } label: {
                 Image(systemName: "gearshape")
                     .foregroundStyle(.secondary)
@@ -70,7 +71,7 @@ struct MenuBarView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
             Button("Open Settings") {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                openSettings()
             }
             .buttonStyle(ParlanceButtonStyle())
         }
