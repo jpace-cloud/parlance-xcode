@@ -1,12 +1,14 @@
 import Foundation
 
-struct AccessibilityOrderRule: AuditRule {
-    let id = "accessibility-order"
-    let name = "Accessibility Order"
-    let wcagCriterion = "1.3.2"
-    let wcagLevel = "A"
+public struct AccessibilityOrderRule: AuditRule {
+    public let id = "accessibility-order"
+    public let name = "Accessibility Order"
+    public let wcagCriterion = "1.3.2"
+    public let wcagLevel = "A"
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 

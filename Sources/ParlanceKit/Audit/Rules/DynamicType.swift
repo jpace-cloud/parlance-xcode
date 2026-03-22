@@ -1,21 +1,21 @@
 import Foundation
 
-struct DynamicTypeRule: AuditRule {
-    let id = "dynamic-type"
-    let name = "Dynamic Type Support"
-    let wcagCriterion = "1.4.4"
-    let wcagLevel = "AA"
+public struct DynamicTypeRule: AuditRule {
+    public let id = "dynamic-type"
+    public let name = "Dynamic Type Support"
+    public let wcagCriterion = "1.4.4"
+    public let wcagLevel = "AA"
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-            // Detect .font(.system(size: N)) — hardcoded font sizes
             if trimmed.contains(".font(.system(size:") || trimmed.contains(".font(Font.system(size:") {
-                // Exclude weight-only calls like .font(.system(size: 0, weight: .bold)) — unlikely, but check
                 results.append(AuditResult(
                     ruleId: id,
                     ruleName: name,
@@ -29,7 +29,6 @@ struct DynamicTypeRule: AuditRule {
                 ))
             }
 
-            // Detect .minimumScaleFactor — may truncate user-preferred text size
             if trimmed.contains(".minimumScaleFactor(") {
                 let factor = extractScaleFactor(from: trimmed)
                 if let f = factor, f < 0.8 {

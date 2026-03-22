@@ -1,12 +1,11 @@
 import Foundation
 
-struct ColorContrastRule: AuditRule {
-    let id = "color-contrast"
-    let name = "Color Contrast"
-    let wcagCriterion = "1.4.3"
-    let wcagLevel = "AA"
+public struct ColorContrastRule: AuditRule {
+    public let id = "color-contrast"
+    public let name = "Color Contrast"
+    public let wcagCriterion = "1.4.3"
+    public let wcagLevel = "AA"
 
-    // Known low-contrast color pairs (foreground, background)
     private let lowContrastPairs: [(String, String)] = [
         (".gray", ".white"),
         (".gray", ".background"),
@@ -18,14 +17,15 @@ struct ColorContrastRule: AuditRule {
         (".white", ".yellow"),
     ]
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-            // Check for foregroundColor or foregroundStyle paired with background in nearby lines
             if trimmed.contains(".foregroundColor(") || trimmed.contains(".foregroundStyle(") {
                 let windowStart = max(0, index - 3)
                 let windowEnd = min(index + 3, lines.count - 1)
@@ -33,7 +33,6 @@ struct ColorContrastRule: AuditRule {
 
                 for (fg, bg) in lowContrastPairs {
                     if window.contains(fg) && window.contains(".background(") {
-                        // Check if background uses the problematic color
                         if window.contains(bg) || window.contains("Color.white") || window.contains(".white)") {
                             results.append(AuditResult(
                                 ruleId: id,

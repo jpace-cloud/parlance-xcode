@@ -1,22 +1,22 @@
 import Foundation
 
-struct ColorOnlyIndicatorsRule: AuditRule {
-    let id = "color-only-indicators"
-    let name = "Color-Only Indicators"
-    let wcagCriterion = "1.4.1"
-    let wcagLevel = "A"
+public struct ColorOnlyIndicatorsRule: AuditRule {
+    public let id = "color-only-indicators"
+    public let name = "Color-Only Indicators"
+    public let wcagCriterion = "1.4.1"
+    public let wcagLevel = "A"
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-            // Detect ternary color expressions: someCondition ? .red : .green (color-only state)
             let colorTernaryPattern = #"\?\s*\.?(red|green|blue|orange|yellow|pink|purple|Color\.red|Color\.green)\s*:\s*\.?(red|green|blue|orange|yellow|pink|purple|Color\.red|Color\.green)"#
             if trimmed.range(of: colorTernaryPattern, options: .regularExpression) != nil {
-                // Check if there's an accompanying text or image indicator in a nearby window
                 let windowStart = max(0, index - 3)
                 let windowEnd = min(index + 3, lines.count - 1)
                 let window = lines[windowStart...windowEnd].joined(separator: "\n")
@@ -24,7 +24,6 @@ struct ColorOnlyIndicatorsRule: AuditRule {
                 let hasTextIndicator = window.contains("Text(") && !window.contains("foregroundColor") && !window.contains("foregroundStyle")
                 let hasImageIndicator = window.contains("Image(systemName:")
 
-                // Only flag if the color change appears isolated (no accompanying text/icon nearby)
                 if !hasTextIndicator && !hasImageIndicator {
                     results.append(AuditResult(
                         ruleId: id,
@@ -40,11 +39,9 @@ struct ColorOnlyIndicatorsRule: AuditRule {
                 }
             }
 
-            // Detect Circle/Rectangle/Capsule filled with conditional color (status indicators)
             if (trimmed.contains("Circle()") || trimmed.contains("Rectangle()")) &&
                trimmed.contains(".fill(") {
-                let fillLine = trimmed
-                let colorTernary = fillLine.range(of: #"\?\s*(Color\.|\.)[a-z]+"#, options: .regularExpression) != nil
+                let colorTernary = trimmed.range(of: #"\?\s*(Color\.|\.)[a-z]+"#, options: .regularExpression) != nil
                 if colorTernary {
                     let windowStart = max(0, index - 2)
                     let windowEnd = min(index + 4, lines.count - 1)

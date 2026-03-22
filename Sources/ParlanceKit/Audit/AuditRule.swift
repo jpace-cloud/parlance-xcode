@@ -1,6 +1,6 @@
 import Foundation
 
-protocol AuditRule {
+public protocol AuditRule {
     var id: String { get }
     var name: String { get }
     var wcagCriterion: String { get }

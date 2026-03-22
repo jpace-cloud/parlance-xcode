@@ -1,12 +1,14 @@
 import Foundation
 
-struct KeyboardAccessRule: AuditRule {
-    let id = "keyboard-access"
-    let name = "Keyboard Accessibility"
-    let wcagCriterion = "2.1.1"
-    let wcagLevel = "A"
+public struct KeyboardAccessRule: AuditRule {
+    public let id = "keyboard-access"
+    public let name = "Keyboard Accessibility"
+    public let wcagCriterion = "2.1.1"
+    public let wcagLevel = "A"
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
@@ -15,7 +17,6 @@ struct KeyboardAccessRule: AuditRule {
 
             guard trimmed.contains(".onTapGesture") else { continue }
 
-            // Look for accessibilityAction in a nearby window
             let windowStart = max(0, index - 3)
             let windowEnd = min(index + 5, lines.count - 1)
             let window = lines[windowStart...windowEnd].joined(separator: "\n")

@@ -1,12 +1,12 @@
 import Foundation
 import Security
 
-enum KeychainError: Error, LocalizedError {
+public enum KeychainError: Error, LocalizedError {
     case itemNotFound
     case duplicateItem
     case unexpectedStatus(OSStatus)
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .itemNotFound: return "API key not found in Keychain"
         case .duplicateItem: return "Duplicate item in Keychain"
@@ -15,14 +15,13 @@ enum KeychainError: Error, LocalizedError {
     }
 }
 
-enum KeychainHelper {
+public enum KeychainHelper {
     private static let service = "business.parlance.xcode"
     private static let account = "api-key"
 
-    static func saveAPIKey(_ key: String) throws {
+    public static func saveAPIKey(_ key: String) throws {
         guard let data = key.data(using: .utf8) else { return }
 
-        // Delete existing item first
         let deleteQuery: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -44,7 +43,7 @@ enum KeychainHelper {
         }
     }
 
-    static func getAPIKey() -> String? {
+    public static func getAPIKey() -> String? {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
@@ -65,7 +64,7 @@ enum KeychainHelper {
         return key
     }
 
-    static func deleteAPIKey() throws {
+    public static func deleteAPIKey() throws {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,

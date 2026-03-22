@@ -1,22 +1,23 @@
 import Foundation
 
-struct TouchTargetSizeRule: AuditRule {
-    let id = "touch-target-size"
-    let name = "Touch Target Size"
-    let wcagCriterion = "2.5.8"
-    let wcagLevel = "AA"
+public struct TouchTargetSizeRule: AuditRule {
+    public let id = "touch-target-size"
+    public let name = "Touch Target Size"
+    public let wcagCriterion = "2.5.8"
+    public let wcagLevel = "AA"
 
     private let interactiveElements = ["Button", "Link", "NavigationLink", "Toggle"]
     private let minimumSize: Double = 44.0
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-            // Check for .frame(width:height:) with small values on interactive elements
             if trimmed.contains(".frame(") && (trimmed.contains("width:") || trimmed.contains("height:")) {
                 let windowStart = max(0, index - 5)
                 let window = lines[windowStart...index].joined(separator: "\n")
@@ -24,7 +25,6 @@ struct TouchTargetSizeRule: AuditRule {
                 let isInteractive = interactiveElements.contains { window.contains($0) }
                 guard isInteractive else { continue }
 
-                // Extract numeric values from frame modifier
                 if let sizes = extractFrameSizes(from: trimmed) {
                     let (width, height) = sizes
                     var tooSmall = false
@@ -63,7 +63,6 @@ struct TouchTargetSizeRule: AuditRule {
         var width: Double? = nil
         var height: Double? = nil
 
-        // Match width: <number>
         if let widthMatch = line.range(of: #"width:\s*(\d+(?:\.\d+)?)"#, options: .regularExpression) {
             let substring = String(line[widthMatch])
             if let numStr = substring.components(separatedBy: CharacterSet(charactersIn: "0123456789.").inverted).filter({ !$0.isEmpty }).first {
@@ -71,7 +70,6 @@ struct TouchTargetSizeRule: AuditRule {
             }
         }
 
-        // Match height: <number>
         if let heightMatch = line.range(of: #"height:\s*(\d+(?:\.\d+)?)"#, options: .regularExpression) {
             let substring = String(line[heightMatch])
             if let numStr = substring.components(separatedBy: CharacterSet(charactersIn: "0123456789.").inverted).filter({ !$0.isEmpty }).first {

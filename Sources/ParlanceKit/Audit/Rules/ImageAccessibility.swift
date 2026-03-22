@@ -1,21 +1,21 @@
 import Foundation
 
-struct ImageAccessibilityRule: AuditRule {
-    let id = "image-accessibility"
-    let name = "Image Accessibility"
-    let wcagCriterion = "1.1.1"
-    let wcagLevel = "A"
+public struct ImageAccessibilityRule: AuditRule {
+    public let id = "image-accessibility"
+    public let name = "Image Accessibility"
+    public let wcagCriterion = "1.1.1"
+    public let wcagLevel = "A"
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
         for (index, line) in lines.enumerated() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
 
-            // Detect Image("...") — named images (not system images which are often decorative)
             if trimmed.contains("Image(\"") && !trimmed.contains("systemName:") {
-                // Look ahead in a window of 5 lines for accessibility modifiers
                 let windowEnd = min(index + 5, lines.count - 1)
                 let window = lines[index...windowEnd].joined(separator: "\n")
 
@@ -38,7 +38,6 @@ struct ImageAccessibilityRule: AuditRule {
                 }
             }
 
-            // UIKit: UIImageView without accessibilityLabel
             if trimmed.contains("UIImageView") && trimmed.contains("=") {
                 let windowEnd = min(index + 8, lines.count - 1)
                 let window = lines[index...windowEnd].joined(separator: "\n")

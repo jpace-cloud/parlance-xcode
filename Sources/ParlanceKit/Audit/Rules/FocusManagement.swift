@@ -1,16 +1,17 @@
 import Foundation
 
-struct FocusManagementRule: AuditRule {
-    let id = "focus-management"
-    let name = "Focus Management"
-    let wcagCriterion = "2.4.7"
-    let wcagLevel = "AA"
+public struct FocusManagementRule: AuditRule {
+    public let id = "focus-management"
+    public let name = "Focus Management"
+    public let wcagCriterion = "2.4.7"
+    public let wcagLevel = "AA"
 
-    func audit(source: String, fileExtension: String) -> [AuditResult] {
+    public init() {}
+
+    public func audit(source: String, fileExtension: String) -> [AuditResult] {
         var results: [AuditResult] = []
         let lines = source.components(separatedBy: "\n")
 
-        // Count text input fields in the file
         let inputFields = ["TextField", "SecureField"]
         var inputCount = 0
         var firstInputLine = 0
@@ -22,7 +23,6 @@ struct FocusManagementRule: AuditRule {
             }
         }
 
-        // If there are multiple input fields, check for @FocusState
         guard inputCount >= 2 else { return results }
 
         let hasFocusState = source.contains("@FocusState") || source.contains("@FocusedValue")

@@ -1,13 +1,13 @@
 import Foundation
 
-enum ParlanceAPIError: Error, LocalizedError {
+public enum ParlanceAPIError: Error, LocalizedError {
     case networkError(Error)
     case unauthorized
     case notFound
     case serverError(Int)
     case decodingError(Error)
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .networkError(let e): return "Network error: \(e.localizedDescription)"
         case .unauthorized: return "Invalid or missing API key"
@@ -33,7 +33,7 @@ private struct PushResponse: Decodable {
     let inserted: Int
 }
 
-class ParlanceAPIClient {
+public class ParlanceAPIClient {
     private let baseURL: String
     private let apiKey: String
     private let session: URLSession
@@ -42,7 +42,7 @@ class ParlanceAPIClient {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
     }
 
-    init(apiKey: String, baseURL: String = "https://api.parlance.business") {
+    public init(apiKey: String, baseURL: String = "https://api.parlance.business") {
         self.apiKey = apiKey
         self.baseURL = baseURL
         self.session = URLSession(configuration: .default)
@@ -95,28 +95,28 @@ class ParlanceAPIClient {
         }
     }
 
-    func testConnection() async throws -> Bool {
+    public func testConnection() async throws -> Bool {
         let request = try makeRequest(path: "/v1/projects")
         let _: [Project] = try await perform(request)
         return true
     }
 
-    func fetchProjects() async throws -> [Project] {
+    public func fetchProjects() async throws -> [Project] {
         let request = try makeRequest(path: "/v1/projects")
         return try await perform(request)
     }
 
-    func fetchContracts(projectId: String) async throws -> [Contract] {
+    public func fetchContracts(projectId: String) async throws -> [Contract] {
         let request = try makeRequest(path: "/v1/projects/\(projectId)/contracts")
         return try await perform(request)
     }
 
-    func fetchGlossary(projectId: String) async throws -> [GlossaryTerm] {
+    public func fetchGlossary(projectId: String) async throws -> [GlossaryTerm] {
         let request = try makeRequest(path: "/v1/projects/\(projectId)/glossary")
         return try await perform(request)
     }
 
-    func pushAuditResults(projectId: String, results: [AuditResult], filePath: String) async throws -> Int {
+    public func pushAuditResults(projectId: String, results: [AuditResult], filePath: String) async throws -> Int {
         let formatter = ISO8601DateFormatter()
         let payload = PushPayload(
             filePath: filePath,
