@@ -52,9 +52,8 @@ class PushResultsCommand: NSObject, XCSourceEditorCommand {
         }
 
         let client = ParlanceAPIClient(apiKey: apiKey)
-        let projectId = UserDefaults.standard.string(forKey: "selectedProjectId") ?? ""
 
-        guard !projectId.isEmpty else {
+        guard let projectId = KeychainHelper.getSelectedProjectId(), !projectId.isEmpty else {
             invocation.buffer.lines.insert("// PARLANCE: No project selected. Open the Parlance menu bar app and choose a project.\n", at: 0)
             completionHandler(nil)
             return

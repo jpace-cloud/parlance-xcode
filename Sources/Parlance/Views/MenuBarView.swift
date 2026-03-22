@@ -8,14 +8,6 @@ struct MenuBarView: View {
     @State private var glossarySearch = ""
     @State private var selectedContract: Contract? = nil
     @State private var selectedTerm: GlossaryTerm? = nil
-    @State private var isPushing = false
-    @State private var pushFeedback: PushFeedback? = nil
-
-    enum PushFeedback {
-        case success(Int)
-        case failure(String)
-    }
-
     enum Tab: String, CaseIterable {
         case contracts = "Contracts"
         case glossary = "Glossary"
@@ -333,59 +325,15 @@ struct MenuBarView: View {
                 Spacer()
 
                 Button {
-                    Task { await pushResults(summary) }
                 } label: {
-                    if isPushing {
-                        HStack(spacing: 4) {
-                            ProgressView().scaleEffect(0.6).frame(width: 10, height: 10)
-                            Text("Pushing…")
-                        }
-                    } else {
-                        Label("Push", systemImage: "arrow.up.circle")
-                    }
+                    Label("Push", systemImage: "arrow.up.circle")
                 }
                 .buttonStyle(ParlanceButtonStyle(compact: true))
-                .disabled(!canPush)
-                .help(canPush ? "Push results to Parlance dashboard" : "Connect to Parlance first")
+                .disabled(true)
+                .opacity(0.5)
+                .help("Push to dashboard coming in v0.2")
             }
             .font(.caption2)
-
-            // Push feedback — fades out on success after 3 s
-            if let feedback = pushFeedback {
-                HStack(spacing: 4) {
-                    switch feedback {
-                    case .success(let count):
-                        Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                        Text("\(count) result\(count == 1 ? "" : "s") pushed successfully")
-                            .foregroundStyle(.green)
-                    case .failure(let msg):
-                        Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
-                        Text(msg).foregroundStyle(.red).lineLimit(2)
-                    }
-                }
-                .font(.caption2)
-                .transition(.opacity)
-            }
-        }
-    }
-
-    private var canPush: Bool {
-        appState.isConnected && appState.selectedProject != nil && !isPushing
-    }
-
-    private func pushResults(_ summary: AuditSummary) async {
-        isPushing = true
-        defer { isPushing = false }
-        pushFeedback = nil
-        do {
-            let count = try await appState.pushAuditSummary(summary)
-            withAnimation { pushFeedback = .success(count) }
-            try? await Task.sleep(for: .seconds(3))
-            withAnimation {
-                if case .success = pushFeedback { pushFeedback = nil }
-            }
-        } catch {
-            withAnimation { pushFeedback = .failure(error.localizedDescription) }
         }
     }
 

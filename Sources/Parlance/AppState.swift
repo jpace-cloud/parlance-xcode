@@ -14,7 +14,6 @@ class AppState: ObservableObject {
     @Published var lastSyncDate: Date? = nil
     @Published var latestAuditSummary: AuditSummary? = nil
 
-    private let sharedDefaults = UserDefaults.standard
     private var refreshTimer: Timer?
     private var client: ParlanceAPIClient? = nil
 
@@ -67,7 +66,7 @@ class AppState: ObservableObject {
 
     func selectProject(_ project: Project) {
         selectedProject = project
-        sharedDefaults.set(project.id, forKey: "selectedProjectId")
+        KeychainHelper.saveSelectedProjectId(project.id)
         Task { await syncData() }
     }
 
@@ -83,8 +82,8 @@ class AppState: ObservableObject {
         do {
             let fetched = try await client.fetchProjects()
             projects = fetched
-            // Restore previously selected project
-            if let savedId = sharedDefaults.string(forKey: "selectedProjectId"),
+            // Restore previously selected project from Keychain
+            if let savedId = KeychainHelper.getSelectedProjectId(),
                let match = fetched.first(where: { $0.id == savedId }) {
                 selectedProject = match
                 await syncData()
@@ -115,6 +114,7 @@ class AppState: ObservableObject {
     }
 
     func pushAuditSummary(_ summary: AuditSummary) async throws -> Int {
+        try? "PUSH SUMMARY called - client exists: \(client != nil), selectedProject: \(selectedProject?.id ?? "nil")\n".write(toFile: "/tmp/parlance-push-appstate.log", atomically: true, encoding: .utf8)
         guard let client else { throw ParlanceAPIError.unauthorized }
         guard let project = selectedProject else { throw ParlanceAPIError.notFound }
         return try await client.pushAuditResults(

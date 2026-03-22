@@ -67,12 +67,22 @@ enum AuditExporter {
         let dateStr = DateFormatter.localizedString(
             from: summary.timestamp, dateStyle: .long, timeStyle: .none)
 
+        print("[Parlance PDF] Building PDF with \(results.count) results")
+
         repeat {
             pageNum += 1
             ctx.beginPDFPage(nil)
 
-            // cursorY tracks the top edge of the next element (from page top, measured downward).
-            // We convert to native PDF y (from bottom) at draw time via: nativeY = pageH - cursorY
+            // Set NSGraphicsContext so NSAttributedString.draw works in a CGPDFContext.
+            // flipped: true = y=0 is TOP of page. We also apply a matching CTM flip so
+            // all CGContext calls (fill, stroke, ellipse) use the same top-down coordinate space.
+            let nsContext = NSGraphicsContext(cgContext: ctx, flipped: true)
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = nsContext
+            ctx.translateBy(x: 0, y: pageH)
+            ctx.scaleBy(x: 1, y: -1)
+
+            // cursorY is y measured from the TOP of the page, increasing downward.
             var cursorY: CGFloat = 0
 
             // ── Header bar ─────────────────────────────────────────────────────────
@@ -177,11 +187,12 @@ enum AuditExporter {
             }
 
             // ── Footer ───────────────────────────────────────────────────────────
+            // footerY is the from-top y of the footer line (near the bottom of the page).
             let footerY = pageH - margin - 12
             ctx.setStrokeColor(clrBorder.cgColor)
             ctx.setLineWidth(0.5)
-            ctx.move(to: CGPoint(x: margin, y: pageH - footerY))
-            ctx.addLine(to: CGPoint(x: margin + contentW, y: pageH - footerY))
+            ctx.move(to: CGPoint(x: margin, y: footerY))
+            ctx.addLine(to: CGPoint(x: margin + contentW, y: footerY))
             ctx.strokePath()
 
             text("Exported from Parlance Xcode Extension — parlance.business",
@@ -191,6 +202,7 @@ enum AuditExporter {
                  ctx, r: rect(footerY + 2, x: margin, w: contentW, h: 10),
                  font: .systemFont(ofSize: 7), color: clrSec, align: .right)
 
+            NSGraphicsContext.restoreGraphicsState()
             ctx.endPDFPage()
         } while resultIdx < results.count
 
@@ -200,15 +212,15 @@ enum AuditExporter {
 
     // MARK: - Drawing primitives
 
-    /// Returns a CGRect in native PDF coordinates (origin bottom-left).
-    /// `yFromTop` is measured from the top of the page downward.
+    /// Returns a CGRect in flipped (top-down) coordinates.
+    /// `yFromTop` is measured from the top of the page downward (y=0 is top).
     private static func rect(_ yFromTop: CGFloat, x: CGFloat = 0,
                               w: CGFloat = pageW, h: CGFloat) -> CGRect {
-        CGRect(x: x, y: pageH - yFromTop - h, width: w, height: h)
+        CGRect(x: x, y: yFromTop, width: w, height: h)
     }
 
-    /// Draws `text` in `r` (native PDF coords), flipping the context so
-    /// NSAttributedString draws top-to-bottom.
+    /// Draws `string` in `r` using the current flipped NSGraphicsContext.
+    /// Coordinates are top-down (y=0 is top of page).
     private static func text(_ string: String, _ ctx: CGContext, r: CGRect,
                               font: NSFont, color: NSColor,
                               align: NSTextAlignment = .left) {
@@ -218,12 +230,7 @@ enum AuditExporter {
         let attrs: [NSAttributedString.Key: Any] = [
             .font: font, .foregroundColor: color, .paragraphStyle: style
         ]
-        ctx.saveGState()
-        ctx.translateBy(x: r.origin.x, y: r.origin.y + r.height)
-        ctx.scaleBy(x: 1, y: -1)
-        NSAttributedString(string: string, attributes: attrs)
-            .draw(in: CGRect(origin: .zero, size: r.size))
-        ctx.restoreGState()
+        NSAttributedString(string: string, attributes: attrs).draw(in: r)
     }
 
     private static func fill(_ ctx: CGContext, _ r: CGRect, color: NSColor) {

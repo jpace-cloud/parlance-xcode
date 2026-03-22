@@ -18,6 +18,41 @@ public enum KeychainError: Error, LocalizedError {
 public enum KeychainHelper {
     private static let service = "business.parlance.xcode"
     private static let account = "api-key"
+    private static let projectAccount = "selected-project-id"
+
+    public static func saveSelectedProjectId(_ id: String) {
+        let data = id.data(using: .utf8) ?? Data()
+        let deleteQuery: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: projectAccount
+        ]
+        SecItemDelete(deleteQuery as CFDictionary)
+        let addQuery: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: projectAccount,
+            kSecValueData: data,
+            kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        ]
+        SecItemAdd(addQuery as CFDictionary, nil)
+    }
+
+    public static func getSelectedProjectId() -> String? {
+        let query: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrService: service,
+            kSecAttrAccount: projectAccount,
+            kSecReturnData: true,
+            kSecMatchLimit: kSecMatchLimitOne
+        ]
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        guard status == errSecSuccess,
+              let data = result as? Data,
+              let id = String(data: data, encoding: .utf8) else { return nil }
+        return id
+    }
 
     public static func saveAPIKey(_ key: String) throws {
         guard let data = key.data(using: .utf8) else { return }
