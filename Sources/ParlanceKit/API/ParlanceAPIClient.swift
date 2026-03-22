@@ -125,7 +125,7 @@ public class ParlanceAPIClient {
             timestamp: formatter.string(from: Date())
         )
         let body = try JSONEncoder().encode(payload)
-        let request = try makeRequest(path: "/api/v1/projects/\(projectId)/audit", method: "POST", body: body)
+        let request = try makeRequest(path: "/api/v1/projects/\(projectId)/audit-results", method: "POST", body: body)
         let response: PushResponse = try await perform(request)
         return response.inserted
     }

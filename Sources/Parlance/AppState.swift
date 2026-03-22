@@ -114,6 +114,13 @@ class AppState: ObservableObject {
         }
     }
 
+    func pushAuditSummary(_ summary: AuditSummary) async throws -> Int {
+        guard let client else { throw ParlanceAPIError.unauthorized }
+        guard let project = selectedProject else { throw ParlanceAPIError.notFound }
+        return try await client.pushAuditResults(
+            projectId: project.id, results: summary.results, filePath: summary.filePath)
+    }
+
     func runAuditOnClipboard() {
         guard let text = NSPasteboard.general.string(forType: .string) else {
             errorMessage = "No text in clipboard. Copy Swift source code first."

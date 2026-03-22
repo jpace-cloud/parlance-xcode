@@ -28,6 +28,7 @@
 		95350193B83278374AC516FA /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
 		96694D9D9F24E1D6ED49D301 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F25D41EFE9E525BFD573A83 /* Contract.swift */; };
 		C021E0B9E6779AB4BEB9AB64 /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
+		C340F43AFDBD433111C8CF25 /* AuditExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE002050AF1B32FC7D75348 /* AuditExporter.swift */; };
 		CE892FCDCA71690A3E73D6CE /* ParlanceEditor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D114DA3AD78F9643FD8D9BA1 /* ParlanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2CEA2EAC4E8B5068B5D6302 /* GlossaryTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F41F855A8D328DBCE39B4 /* GlossaryTerm.swift */; };
@@ -112,6 +113,7 @@
 		B737502B68290C83AFAD21F9 /* TouchTargetSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTargetSize.swift; sourceTree = "<group>"; };
 		D343585EC07D8D37E0126894 /* ColorContrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrast.swift; sourceTree = "<group>"; };
 		DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParlanceEditor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFE002050AF1B32FC7D75348 /* AuditExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditExporter.swift; sourceTree = "<group>"; };
 		EF8F41F855A8D328DBCE39B4 /* GlossaryTerm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryTerm.swift; sourceTree = "<group>"; };
 		F1B8D061C06DD6230FEBF390 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		F25B35E1483CA9AFD088F139 /* FocusManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusManagement.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */,
+				DFE002050AF1B32FC7D75348 /* AuditExporter.swift */,
 				7D8BF1683A3C78BB0A3A4DD3 /* Info.plist */,
 				F2955E7C6D39CAD948D5367B /* Parlance.entitlements */,
 				3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */,
@@ -374,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938A4A01361C12468B79CDCD /* AppState.swift in Sources */,
+				C340F43AFDBD433111C8CF25 /* AuditExporter.swift in Sources */,
 				47D784E62BD37324FD107970 /* MenuBarView.swift in Sources */,
 				4F2CEE9E730647ED6CC9B5D8 /* ParlanceApp.swift in Sources */,
 				E8B0E0B82A053C53B322D80D /* SettingsView.swift in Sources */,
