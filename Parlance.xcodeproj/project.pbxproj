@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		051D8988889524B51D771535 /* ImageAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E1CCFB70A6AC268A1D44FA /* ImageAccessibility.swift */; };
 		1163CBD7543EFAE5CC752016 /* DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96280704548045F30DC3AF3D /* DynamicType.swift */; };
+		18DDFB75536A12130F002D2E /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */; };
 		389D7281277050BE8914FA7D /* KeyboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E40AEB0EB58C5124636B84 /* KeyboardAccess.swift */; };
 		3CAC7B6C32F7F776BDCF9166 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57044CD1A948C6CB2CC90210 /* Project.swift */; };
 		47D784E62BD37324FD107970 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8D061C06DD6230FEBF390 /* MenuBarView.swift */; };
@@ -27,9 +28,9 @@
 		95350193B83278374AC516FA /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
 		96694D9D9F24E1D6ED49D301 /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F25D41EFE9E525BFD573A83 /* Contract.swift */; };
 		C021E0B9E6779AB4BEB9AB64 /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
+		CE892FCDCA71690A3E73D6CE /* ParlanceEditor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D114DA3AD78F9643FD8D9BA1 /* ParlanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2CEA2EAC4E8B5068B5D6302 /* GlossaryTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F41F855A8D328DBCE39B4 /* GlossaryTerm.swift */; };
-		D39B79016B776C4145CC6268 /* ParlanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D45128AFFCB7C4DCA8ACD2CB /* AccessibilityOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56839D86A83B881B30788E8 /* AccessibilityOrder.swift */; };
 		DC96A22EE4D5B6E76AB8AB52 /* SwiftAuditEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA25A0D4F4B36CE997E168 /* SwiftAuditEngine.swift */; };
 		E289BAFC43E522C2D72317A4 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939F3D0BDCBD9B2B849BE7B /* KeychainHelper.swift */; };
@@ -38,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1CF3E0E709B034882C0E8D17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 454808E19A70AFCB2942BE5F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82D806DA0B86ADCA6B89835F;
+			remoteInfo = ParlanceEditor;
+		};
 		298F93FACCF4A3D91855E257 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 454808E19A70AFCB2942BE5F /* Project object */;
@@ -55,6 +63,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		0D709BDB4866707EEB19782C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CE892FCDCA71690A3E73D6CE /* ParlanceEditor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABADE38F16240E504ADADCEF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,20 +85,10 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E7504426497A8787C5BB8A8E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D39B79016B776C4145CC6268 /* ParlanceKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = ../../../Applications/Xcode.app/Contents/Developer/Library/Frameworks/XcodeKit.framework; sourceTree = "<group>"; };
 		1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParlanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		1FEE4D769E2078E784C1A7A7 /* HeadingStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingStructure.swift; sourceTree = "<group>"; };
@@ -99,9 +108,10 @@
 		9B5FC57450800EE409AA0BE5 /* AuditRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditRule.swift; sourceTree = "<group>"; };
 		AB646F48BCC8194E3E522337 /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
 		B0602A497391E21F37EC709C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B1A3907AE6D1C3E73FBA9569 /* ParlanceEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ParlanceEditor.entitlements; sourceTree = "<group>"; };
 		B737502B68290C83AFAD21F9 /* TouchTargetSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTargetSize.swift; sourceTree = "<group>"; };
 		D343585EC07D8D37E0126894 /* ColorContrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrast.swift; sourceTree = "<group>"; };
-		D34B91B7DA337772A00511D7 /* ParlanceEditor.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = ParlanceEditor.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParlanceEditor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF8F41F855A8D328DBCE39B4 /* GlossaryTerm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryTerm.swift; sourceTree = "<group>"; };
 		F1B8D061C06DD6230FEBF390 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		F25B35E1483CA9AFD088F139 /* FocusManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusManagement.swift; sourceTree = "<group>"; };
@@ -127,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C021E0B9E6779AB4BEB9AB64 /* ParlanceKit.framework in Frameworks */,
+				18DDFB75536A12130F002D2E /* XcodeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				54A083EB327854B1F3894170 /* Info.plist */,
+				B1A3907AE6D1C3E73FBA9569 /* ParlanceEditor.entitlements */,
 				AB646F48BCC8194E3E522337 /* SourceEditorCommand.swift */,
 				34C17F65FCA289282274A050 /* SourceEditorExtension.swift */,
 			);
@@ -194,7 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				FAE51026264A37DE72E0D663 /* Parlance.app */,
-				D34B91B7DA337772A00511D7 /* ParlanceEditor.xpc */,
+				DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */,
 				1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */,
 			);
 			name = Products;
@@ -206,6 +218,7 @@
 				1D1FFD727DA3016C4D893B86 /* Parlance */,
 				0DADC48B4647AB9AF0A92F08 /* ParlanceEditor */,
 				211AF5E942F5188A2EDF958D /* ParlanceKit */,
+				C577FC664F72C77BD439FCF4 /* Frameworks */,
 				535776FC87E0212BBBB0000A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -236,6 +249,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		C577FC664F72C77BD439FCF4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EB03E75A5C719621415BDF64 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -254,12 +275,14 @@
 			buildPhases = (
 				5ECFE8618C989D8DEA9017BA /* Sources */,
 				906341ED684250E2DC78DF86 /* Frameworks */,
+				0D709BDB4866707EEB19782C /* Embed Foundation Extensions */,
 				ABADE38F16240E504ADADCEF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				97515F6F773DE2E0E0E0D45F /* PBXTargetDependency */,
+				B3550F94E7F68F7A680D29AB /* PBXTargetDependency */,
 			);
 			name = Parlance;
 			packageProductDependencies = (
@@ -274,7 +297,6 @@
 			buildPhases = (
 				36C19CB9211F86D0B1D0F5CD /* Sources */,
 				AB1BC47F295D6493CB415902 /* Frameworks */,
-				E7504426497A8787C5BB8A8E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -285,8 +307,8 @@
 			packageProductDependencies = (
 			);
 			productName = ParlanceEditor;
-			productReference = D34B91B7DA337772A00511D7 /* ParlanceEditor.xpc */;
-			productType = "com.apple.product-type.xpc-service";
+			productReference = DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		E893FDF7814A574BEC71F4B0 /* ParlanceKit */ = {
 			isa = PBXNativeTarget;
@@ -395,6 +417,11 @@
 			isa = PBXTargetDependency;
 			target = E893FDF7814A574BEC71F4B0 /* ParlanceKit */;
 			targetProxy = 298F93FACCF4A3D91855E257 /* PBXContainerItemProxy */;
+		};
+		B3550F94E7F68F7A680D29AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 82D806DA0B86ADCA6B89835F /* ParlanceEditor */;
+			targetProxy = 1CF3E0E709B034882C0E8D17 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -530,12 +557,22 @@
 		D2813298267C9ACD0EF03255 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/ParlanceEditor/ParlanceEditor.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Applications/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
 				INFOPLIST_FILE = Sources/ParlanceEditor/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = business.parlance.xcode.editor;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.9;
 			};
 			name = Release;
@@ -614,12 +651,22 @@
 		EB595A2CAF35FED6CAB54F8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/ParlanceEditor/ParlanceEditor.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Applications/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
 				INFOPLIST_FILE = Sources/ParlanceEditor/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = business.parlance.xcode.editor;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.9;
 			};
 			name = Debug;

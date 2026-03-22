@@ -25,6 +25,30 @@ targets:
         DEFINES_MODULE: YES
         SKIP_INSTALL: YES
 
+  ParlanceEditor:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: Sources/ParlanceEditor
+    dependencies:
+      - target: ParlanceKit
+        embed: false
+      - framework: /Applications/Xcode.app/Contents/Developer/Library/Frameworks/XcodeKit.framework
+        embed: false
+    settings:
+      base:
+        INFOPLIST_FILE: Sources/ParlanceEditor/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.editor
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        SWIFT_VERSION: "5.9"
+        SKIP_INSTALL: YES
+        CODE_SIGN_ENTITLEMENTS: Sources/ParlanceEditor/ParlanceEditor.entitlements
+    entitlements:
+      path: Sources/ParlanceEditor/ParlanceEditor.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+
   Parlance:
     type: application
     platform: macOS
@@ -32,6 +56,8 @@ targets:
       - path: Sources/Parlance
     dependencies:
       - target: ParlanceKit
+        embed: true
+      - target: ParlanceEditor
         embed: true
     settings:
       base:
@@ -46,19 +72,3 @@ targets:
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.network.client: true
-
-  ParlanceEditor:
-    type: xpc-service
-    platform: macOS
-    sources:
-      - path: Sources/ParlanceEditor
-    dependencies:
-      - target: ParlanceKit
-        embed: true
-    settings:
-      base:
-        INFOPLIST_FILE: Sources/ParlanceEditor/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.editor
-        MACOSX_DEPLOYMENT_TARGET: "13.0"
-        SWIFT_VERSION: "5.9"
-        LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
