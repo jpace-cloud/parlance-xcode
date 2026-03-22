@@ -1,0 +1,67 @@
+name: Parlance
+options:
+  bundleIdPrefix: business.parlance
+  deploymentTarget:
+    macOS: "13.0"
+  xcodeVersion: "15.0"
+  groupOrdering:
+    - order: [Sources, test]
+settings:
+  SWIFT_VERSION: "5.9"
+  MACOSX_DEPLOYMENT_TARGET: "13.0"
+
+targets:
+  ParlanceKit:
+    type: framework
+    platform: macOS
+    sources:
+      - path: Sources/ParlanceKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.kit
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        SWIFT_VERSION: "5.9"
+        DEFINES_MODULE: YES
+        SKIP_INSTALL: YES
+
+  Parlance:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/Parlance
+    dependencies:
+      - target: ParlanceKit
+        embed: true
+    settings:
+      base:
+        INFOPLIST_FILE: Sources/Parlance/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        SWIFT_VERSION: "5.9"
+        LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
+        CODE_SIGN_ENTITLEMENTS: Sources/Parlance/Parlance.entitlements
+    entitlements:
+      path: Sources/Parlance/Parlance.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        com.apple.security.keychain-access-groups:
+          - $(AppIdentifierPrefix)business.parlance.xcode
+        com.apple.security.application-groups:
+          - group.business.parlance
+
+  ParlanceEditor:
+    type: xpc-service
+    platform: macOS
+    sources:
+      - path: Sources/ParlanceEditor
+    dependencies:
+      - target: ParlanceKit
+        embed: true
+    settings:
+      base:
+        INFOPLIST_FILE: Sources/ParlanceEditor/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.editor
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        SWIFT_VERSION: "5.9"
+        LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
