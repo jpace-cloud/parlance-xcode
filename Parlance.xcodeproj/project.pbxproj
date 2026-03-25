@@ -32,6 +32,7 @@
 		CE892FCDCA71690A3E73D6CE /* ParlanceEditor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D114DA3AD78F9643FD8D9BA1 /* ParlanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2CEA2EAC4E8B5068B5D6302 /* GlossaryTerm.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F41F855A8D328DBCE39B4 /* GlossaryTerm.swift */; };
+		D384A5911576D7A1B59456B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6CDB07EB72B9DA2D70B9BB1 /* Assets.xcassets */; };
 		D45128AFFCB7C4DCA8ACD2CB /* AccessibilityOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56839D86A83B881B30788E8 /* AccessibilityOrder.swift */; };
 		DC96A22EE4D5B6E76AB8AB52 /* SwiftAuditEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFA25A0D4F4B36CE997E168 /* SwiftAuditEngine.swift */; };
 		E289BAFC43E522C2D72317A4 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7939F3D0BDCBD9B2B849BE7B /* KeychainHelper.swift */; };
@@ -89,7 +90,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = ../../../Applications/Xcode.app/Contents/Developer/Library/Frameworks/XcodeKit.framework; sourceTree = "<group>"; };
+		09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = ../../../../Applications/Xcode.app/Contents/Developer/Library/Frameworks/XcodeKit.framework; sourceTree = "<group>"; };
 		1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParlanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		1FEE4D769E2078E784C1A7A7 /* HeadingStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingStructure.swift; sourceTree = "<group>"; };
@@ -112,6 +113,7 @@
 		B1A3907AE6D1C3E73FBA9569 /* ParlanceEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ParlanceEditor.entitlements; sourceTree = "<group>"; };
 		B737502B68290C83AFAD21F9 /* TouchTargetSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTargetSize.swift; sourceTree = "<group>"; };
 		D343585EC07D8D37E0126894 /* ColorContrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrast.swift; sourceTree = "<group>"; };
+		D6CDB07EB72B9DA2D70B9BB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParlanceEditor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFE002050AF1B32FC7D75348 /* AuditExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditExporter.swift; sourceTree = "<group>"; };
 		EF8F41F855A8D328DBCE39B4 /* GlossaryTerm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlossaryTerm.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */,
+				D6CDB07EB72B9DA2D70B9BB1 /* Assets.xcassets */,
 				DFE002050AF1B32FC7D75348 /* AuditExporter.swift */,
 				7D8BF1683A3C78BB0A3A4DD3 /* Info.plist */,
 				F2955E7C6D39CAD948D5367B /* Parlance.entitlements */,
@@ -277,6 +280,7 @@
 			buildConfigurationList = B65BACCABD65740DAFFC0945 /* Build configuration list for PBXNativeTarget "Parlance" */;
 			buildPhases = (
 				5ECFE8618C989D8DEA9017BA /* Sources */,
+				8DC1067F039BFD7076C295F1 /* Resources */,
 				906341ED684250E2DC78DF86 /* Frameworks */,
 				0D709BDB4866707EEB19782C /* Embed Foundation Extensions */,
 				ABADE38F16240E504ADADCEF /* Embed Frameworks */,
@@ -361,6 +365,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC1067F039BFD7076C295F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D384A5911576D7A1B59456B8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		36C19CB9211F86D0B1D0F5CD /* Sources */ = {

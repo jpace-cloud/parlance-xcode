@@ -1,4 +1,7 @@
 import Foundation
+import os.log
+
+private let logger = Logger(subsystem: "business.parlance.xcode", category: "API")
 
 public enum ParlanceAPIError: Error, LocalizedError {
     case networkError(Error)
@@ -51,7 +54,7 @@ public class ParlanceAPIClient {
         guard let url = URL(string: baseURL + path) else {
             throw ParlanceAPIError.networkError(URLError(.badURL))
         }
-        print("[Parlance] \(method) \(url)")
+        logger.debug("\(method) \(url)")
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -59,9 +62,6 @@ public class ParlanceAPIClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if let body {
             request.httpBody = body
-            if let preview = String(data: body, encoding: .utf8) {
-                print("[Parlance] Body: \(preview)")
-            }
         }
         return request
     }
@@ -89,15 +89,14 @@ public class ParlanceAPIClient {
         guard let http = urlResponse as? HTTPURLResponse else {
             throw ParlanceAPIError.networkError(URLError(.badServerResponse))
         }
-        print("[Parlance] Status: \(http.statusCode)")
+        logger.debug("Status: \(http.statusCode)")
         switch http.statusCode {
         case 200...299: break
         case 401: throw ParlanceAPIError.unauthorized
         case 404: throw ParlanceAPIError.notFound
         default:
-            // Try to extract error message from { "data": null, "error": "..." }
             let message = (try? JSONDecoder().decode(APIResponse<String>.self, from: data))?.error
-            print("[Parlance] Error body: \(String(data: data, encoding: .utf8) ?? "(no body)")")
+            logger.error("Request failed (\(http.statusCode)): \(message ?? "unknown")")
             throw ParlanceAPIError.serverError(http.statusCode, message)
         }
         return (data, http)
@@ -128,7 +127,6 @@ public class ParlanceAPIClient {
         guard !projectId.isEmpty else {
             throw ParlanceAPIError.noProjectSelected
         }
-        try? "PUSH START - projectId: \(projectId)\n".write(toFile: "/tmp/parlance-push.log", atomically: true, encoding: .utf8)
         let payload: [String: Any] = ["results": results.map { result -> [String: String] in
             return [
                 "rule_id": result.ruleId,
@@ -138,9 +136,6 @@ public class ParlanceAPIClient {
             ]
         }]
         let body = try JSONSerialization.data(withJSONObject: payload)
-        if let preview = String(data: body, encoding: .utf8) {
-            print("[Parlance] Push payload: \(preview)")
-        }
         let request = try makeRequest(
             path: "/api/v1/projects/\(projectId)/audit-results",
             method: "POST",
@@ -157,10 +152,7 @@ public class ParlanceAPIClient {
         guard let http = urlResponse as? HTTPURLResponse else {
             throw ParlanceAPIError.networkError(URLError(.badServerResponse))
         }
-        print("[Parlance] Push response status: \(http.statusCode), body: \(String(data: data, encoding: .utf8) ?? "nil")")
-        if let existing = try? String(contentsOfFile: "/tmp/parlance-push.log", encoding: .utf8) {
-            try? (existing + "PUSH STATUS: \(http.statusCode) BODY: \(String(data: data, encoding: .utf8) ?? "nil")\n").write(toFile: "/tmp/parlance-push.log", atomically: true, encoding: .utf8)
-        }
+        logger.debug("Push response status: \(http.statusCode)")
 
         switch http.statusCode {
         case 200, 201:

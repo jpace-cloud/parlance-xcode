@@ -105,26 +105,29 @@ struct SettingsView: View {
 
     private var aboutTab: some View {
         VStack(spacing: 16) {
-            Image(systemName: "checkmark.shield.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(parlancePurple)
+            Image("AppIconImage")
+                .resizable()
+                .frame(width: 64, height: 64)
+                .cornerRadius(14)
 
-            Text("Parlance for Xcode")
-                .font(.title2).fontWeight(.semibold)
+            Text("Parlance")
+                .font(.system(size: 17, weight: .bold))
 
             Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Text("Accessibility audit and design contract tooling for Swift and SwiftUI developers.")
+            Text("The single source of agreement between design and development.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 280)
 
-            Link("parlance.business", destination: URL(string: "https://parlance.business")!)
-                .font(.caption)
-                .foregroundStyle(parlancePurple)
+            if let url = URL(string: "https://parlance.business") {
+                Link("parlance.business", destination: url)
+                    .font(.caption)
+                    .foregroundStyle(parlancePurple)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -114,7 +114,6 @@ class AppState: ObservableObject {
     }
 
     func pushAuditSummary(_ summary: AuditSummary) async throws -> Int {
-        try? "PUSH SUMMARY called - client exists: \(client != nil), selectedProject: \(selectedProject?.id ?? "nil")\n".write(toFile: "/tmp/parlance-push-appstate.log", atomically: true, encoding: .utf8)
         guard let client else { throw ParlanceAPIError.unauthorized }
         guard let project = selectedProject else { throw ParlanceAPIError.notFound }
         return try await client.pushAuditResults(

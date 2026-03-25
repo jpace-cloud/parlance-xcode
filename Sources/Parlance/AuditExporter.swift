@@ -1,6 +1,9 @@
 import AppKit
+import os.log
 import ParlanceKit
 import UniformTypeIdentifiers
+
+private let logger = Logger(subsystem: "business.parlance.xcode", category: "Export")
 
 enum AuditExporter {
 
@@ -67,7 +70,7 @@ enum AuditExporter {
         let dateStr = DateFormatter.localizedString(
             from: summary.timestamp, dateStyle: .long, timeStyle: .none)
 
-        print("[Parlance PDF] Building PDF with \(results.count) results")
+        logger.debug("Building PDF with \(results.count) results")
 
         repeat {
             pageNum += 1

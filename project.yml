@@ -79,6 +79,7 @@ targets:
         SWIFT_VERSION: "5.9"
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
         CODE_SIGN_ENTITLEMENTS: Sources/Parlance/Parlance.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     entitlements:
       path: Sources/Parlance/Parlance.entitlements
       properties:

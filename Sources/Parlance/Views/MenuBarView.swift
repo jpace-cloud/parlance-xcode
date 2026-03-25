@@ -34,11 +34,13 @@ struct MenuBarView: View {
     private var header: some View {
         HStack {
             HStack(spacing: 6) {
-                Image(systemName: "checkmark.shield.fill")
+                Image("LogoMark")
+                    .resizable()
+                    .renderingMode(.template)
                     .foregroundStyle(parlancePurple)
+                    .frame(width: 16, height: 16)
                 Text("Parlance")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .font(.system(size: 14, weight: .bold))
             }
             Spacer()
             Circle()
@@ -416,7 +418,6 @@ struct ContractRow: View {
         .padding(.vertical, 8)
         .background(Color.clear)
         .contentShape(Rectangle())
-        .hoverEffect()
     }
 
     private func statusColor(_ status: String) -> Color {
@@ -549,14 +550,6 @@ struct TabButtonStyle: ButtonStyle {
     }
 }
 
-// MARK: - Hover effect helper
-
-extension View {
-    func hoverEffect() -> some View {
-        self.onHover { _ in }
-    }
-}
-
 // MARK: - Shared color
 
-let parlancePurple = Color(red: 0.498, green: 0.467, blue: 0.867)
+let parlancePurple = Color(red: 0.486, green: 0.227, blue: 0.929) // #7C3AED — brand purple-500
