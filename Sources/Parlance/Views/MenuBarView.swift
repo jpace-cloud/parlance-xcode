@@ -34,7 +34,7 @@ struct MenuBarView: View {
     private var header: some View {
         HStack {
             HStack(spacing: 6) {
-                Image("LogoMark")
+                Image("Parlance_Icon_Dark")
                     .resizable()
                     .renderingMode(.template)
                     .foregroundStyle(parlancePurple)

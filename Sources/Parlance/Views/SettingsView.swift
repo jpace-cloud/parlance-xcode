@@ -105,7 +105,7 @@ struct SettingsView: View {
 
     private var aboutTab: some View {
         VStack(spacing: 16) {
-            Image("AppIconImage")
+            Image("Parlance_Icon_Dark")
                 .resizable()
                 .frame(width: 64, height: 64)
                 .cornerRadius(14)

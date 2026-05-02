@@ -5,7 +5,7 @@ struct ParlanceApp: App {
     @StateObject private var appState = AppState()
 
     var body: some Scene {
-        MenuBarExtra("Parlance", image: "LogoMark") {
+        MenuBarExtra("Parlance", image: "Parlance_Icon_Dark") {
             MenuBarView()
                 .environmentObject(appState)
         }
