@@ -13,7 +13,7 @@ settings:
 packages:
   ParlanceSDK:
     url: https://github.com/jpace-cloud/parlance-swift-sdk.git
-    revision: 4d1e3b163180dd7e245e6754ad4a93905271d424
+    revision: 3176f8d1ad2793de08901e4e82639e1d6104b983
 
 schemes:
   Parlance:

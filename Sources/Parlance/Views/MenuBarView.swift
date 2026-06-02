@@ -387,9 +387,10 @@ struct MenuBarView: View {
 
     private func statusColor(_ status: String) -> Color {
         switch status.lowercased() {
-        case "agreed": return .green
-        case "proposed": return .orange
-        case "divergent": return .red
+        case "active": return .green
+        case "draft": return .orange
+        case "archived": return .secondary
+        case "deprecated": return .red
         default: return .secondary
         }
     }
@@ -419,9 +420,10 @@ struct ContractRow: View {
 
     private func statusColor(_ status: String) -> Color {
         switch status.lowercased() {
-        case "agreed": return .green
-        case "proposed": return .orange
-        case "divergent": return .red
+        case "active": return .green
+        case "draft": return .orange
+        case "archived": return .secondary
+        case "deprecated": return .red
         default: return .secondary
         }
     }
