@@ -144,7 +144,7 @@ struct SettingsView: View {
         isTesting = true
         testResult = nil
         let key = apiKeyInput
-        let client = ParlanceAPIClient(apiKey: key)
+        let client = ParlanceClientProvider.make(apiKey: key)
         do {
             _ = try await client.testConnection()
             testResult = .success

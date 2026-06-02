@@ -1,12 +1,13 @@
 import SwiftUI
 import ParlanceKit
+import ParlanceSDK
 
 struct MenuBarView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.openSettings) private var openSettings
     @State private var selectedTab: Tab = .contracts
     @State private var glossarySearch = ""
-    @State private var selectedContract: Contract? = nil
+    @State private var selectedContract: ContractSummary? = nil
     @State private var selectedTerm: GlossaryTerm? = nil
     enum Tab: String, CaseIterable {
         case contracts = "Contracts"
@@ -151,7 +152,7 @@ struct MenuBarView: View {
         }
     }
 
-    private func contractDetail(_ contract: Contract) -> some View {
+    private func contractDetail(_ contract: ContractSummary) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
                 selectedContract = nil
@@ -173,11 +174,9 @@ struct MenuBarView: View {
 
             HStack(spacing: 6) {
                 if let category = contract.category {
-                    Badge(text: category, color: .secondary)
+                    Badge(text: category.rawValue, color: .secondary)
                 }
-                if let status = contract.status {
-                    Badge(text: status, color: statusColor(status))
-                }
+                Badge(text: contract.status.rawValue, color: statusColor(contract.status.rawValue))
             }
             Spacer()
         }
@@ -234,16 +233,16 @@ struct MenuBarView: View {
             .buttonStyle(.plain)
 
             Text(term.name).font(.headline)
-            if let raw = term.rawValue {
-                Text(raw).font(.caption.monospaced()).foregroundStyle(.secondary)
+            if !term.rawValue.isEmpty {
+                Text(term.rawValue).font(.caption.monospaced()).foregroundStyle(.secondary)
             }
-            if let translations = term.translations, !translations.isEmpty {
+            if !term.translations.isEmpty {
                 Text("Translations").font(.caption).fontWeight(.semibold).padding(.top, 4)
-                ForEach(Array(translations.keys.sorted()), id: \.self) { key in
+                ForEach(Array(term.translations.keys.sorted()), id: \.self) { key in
                     HStack {
                         Text(key).font(.caption).foregroundStyle(.secondary)
                         Spacer()
-                        Text(translations[key] ?? "").font(.caption)
+                        Text(term.translations[key] ?? "").font(.caption)
                     }
                 }
             }
@@ -399,20 +398,18 @@ struct MenuBarView: View {
 // MARK: - Subviews
 
 struct ContractRow: View {
-    let contract: Contract
+    let contract: ContractSummary
 
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text(contract.name).font(.caption).fontWeight(.medium)
                 if let category = contract.category {
-                    Text(category).font(.caption2).foregroundStyle(.secondary)
+                    Text(category.rawValue).font(.caption2).foregroundStyle(.secondary)
                 }
             }
             Spacer()
-            if let status = contract.status {
-                Badge(text: status, color: statusColor(status))
-            }
+            Badge(text: contract.status.rawValue, color: statusColor(contract.status.rawValue))
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -437,13 +434,13 @@ struct GlossaryRow: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text(term.name).font(.caption).fontWeight(.medium)
-                if let raw = term.rawValue {
-                    Text(raw).font(.caption2.monospaced()).foregroundStyle(.secondary)
+                if !term.rawValue.isEmpty {
+                    Text(term.rawValue).font(.caption2.monospaced()).foregroundStyle(.secondary)
                 }
             }
             Spacer()
-            if let category = term.category {
-                Badge(text: category, color: .secondary)
+            if !term.category.isEmpty {
+                Badge(text: term.category, color: .secondary)
             }
         }
         .padding(.horizontal, 12)
@@ -453,7 +450,7 @@ struct GlossaryRow: View {
 }
 
 struct AuditResultRow: View {
-    let result: AuditResult
+    let result: ParlanceKit.AuditResult
 
     var body: some View {
         HStack(alignment: .top, spacing: 8) {

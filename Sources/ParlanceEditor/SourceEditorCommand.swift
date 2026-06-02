@@ -1,5 +1,6 @@
 import XcodeKit
 import ParlanceKit
+import ParlanceSDK
 
 class AuditCommand: NSObject, XCSourceEditorCommand {
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void) {
@@ -51,7 +52,7 @@ class PushResultsCommand: NSObject, XCSourceEditorCommand {
             return
         }
 
-        let client = ParlanceAPIClient(apiKey: apiKey)
+        let client = ParlanceClientProvider.make(apiKey: apiKey)
 
         guard let projectId = KeychainHelper.getSelectedProjectId(), !projectId.isEmpty else {
             invocation.buffer.lines.insert("// PARLANCE: No project selected. Open the Parlance menu bar app and choose a project.\n", at: 0)
@@ -61,12 +62,32 @@ class PushResultsCommand: NSObject, XCSourceEditorCommand {
 
         Task {
             do {
-                let count = try await client.pushAuditResults(projectId: projectId, results: results, filePath: "xcode-file")
-                invocation.buffer.lines.insert("// PARLANCE: \(count) result(s) pushed to dashboard.\n", at: 0)
+                let items: [ParlanceSDK.AuditResultItem] = results.map { r in
+                    ParlanceSDK.AuditResultItem(
+                        ruleId: r.ruleId,
+                        severity: mapSeverity(r.severity),
+                        message: r.message,
+                        filePath: "xcode-file"
+                    )
+                }
+                let input = ParlanceSDK.AuditResultInput(results: items)
+                let response: ParlanceSDK.AuditResult = try await client.pushAuditResults(
+                    projectId: projectId,
+                    input: input
+                )
+                invocation.buffer.lines.insert("// PARLANCE: \(response.inserted) result(s) pushed to dashboard.\n", at: 0)
             } catch {
                 invocation.buffer.lines.insert("// PARLANCE: Push failed — \(error.localizedDescription)\n", at: 0)
             }
             completionHandler(nil)
+        }
+    }
+
+    private func mapSeverity(_ s: Severity) -> ParlanceSDK.AuditSeverity {
+        switch s {
+        case .error:   return .error
+        case .warning: return .warning
+        case .info:    return .info
         }
     }
 }

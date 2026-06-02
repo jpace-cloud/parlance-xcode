@@ -10,6 +10,11 @@ settings:
   SWIFT_VERSION: "5.9"
   MACOSX_DEPLOYMENT_TARGET: "14.0"
 
+packages:
+  ParlanceSDK:
+    url: https://github.com/jpace-cloud/parlance-swift-sdk.git
+    revision: 4d1e3b163180dd7e245e6754ad4a93905271d424
+
 schemes:
   Parlance:
     build:
@@ -28,6 +33,9 @@ targets:
     platform: macOS
     sources:
       - path: Sources/ParlanceKit
+    dependencies:
+      - package: ParlanceSDK
+        product: ParlanceSDK
     settings:
       base:
         INFOPLIST_FILE: Sources/ParlanceKit/Info.plist
