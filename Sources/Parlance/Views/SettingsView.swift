@@ -30,7 +30,7 @@ struct SettingsView: View {
     private var accountTab: some View {
         Form {
             Section("API Key") {
-                SecureField("Paste your Parlance API key…", text: $apiKeyInput)
+                SecureField("Paste your parlance API key…", text: $apiKeyInput)
                     .textFieldStyle(.roundedBorder)
 
                 HStack(spacing: 8) {
@@ -38,7 +38,7 @@ struct SettingsView: View {
                         Task { await saveAndConnect() }
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(parlancePurple)
+                    .tint(Color.parlance.primary)
                     .disabled(apiKeyInput.isEmpty)
 
                     Button("Test Connection") {
@@ -64,10 +64,10 @@ struct SettingsView: View {
                         switch result {
                         case .success:
                             Label("Connected successfully", systemImage: "checkmark.circle.fill")
-                                .foregroundStyle(.green)
+                                .foregroundStyle(Color.parlance.pass)
                         case .failure(let msg):
                             Label(msg, systemImage: "xmark.circle.fill")
-                                .foregroundStyle(.red)
+                                .foregroundStyle(Color.parlance.fail)
                         }
                     }
                     .font(.caption)
@@ -107,11 +107,16 @@ struct SettingsView: View {
         VStack(spacing: 16) {
             Image("Parlance_Icon_Dark")
                 .resizable()
-                .frame(width: 64, height: 64)
-                .cornerRadius(14)
+                .renderingMode(.template)
+                .foregroundStyle(Color.parlance.primary)
+                .frame(width: 52, height: 52)
+                .background(
+                    Color.parlance.primary.opacity(0.08)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                )
 
-            Text("Parlance")
-                .font(.system(size: 17, weight: .bold))
+            Text("parlance")
+                .font(.system(size: 16, weight: .semibold))
 
             Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
                 .font(.caption)
@@ -126,7 +131,7 @@ struct SettingsView: View {
             if let url = URL(string: "https://parlance.business") {
                 Link("parlance.business", destination: url)
                     .font(.caption)
-                    .foregroundStyle(parlancePurple)
+                    .foregroundStyle(Color.parlance.primary)
             }
         }
         .padding()
@@ -137,7 +142,9 @@ struct SettingsView: View {
 
     private func saveAndConnect() async {
         await appState.saveAPIKey(apiKeyInput)
-        testResult = appState.isConnected ? .success : .failure(appState.errorMessage ?? "Connection failed")
+        testResult = appState.isConnected
+            ? .success
+            : .failure(appState.errorMessage ?? "Connection failed")
     }
 
     private func testConnection() async {

@@ -10,6 +10,7 @@
 		051D8988889524B51D771535 /* ImageAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E1CCFB70A6AC268A1D44FA /* ImageAccessibility.swift */; };
 		1163CBD7543EFAE5CC752016 /* DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96280704548045F30DC3AF3D /* DynamicType.swift */; };
 		18DDFB75536A12130F002D2E /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */; };
+		2501B9C5A952E6EBE6B7A993 /* ParlanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429657E1D2BEF7DA0DEC3755 /* ParlanceTheme.swift */; };
 		389D7281277050BE8914FA7D /* KeyboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E40AEB0EB58C5124636B84 /* KeyboardAccess.swift */; };
 		47D784E62BD37324FD107970 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8D061C06DD6230FEBF390 /* MenuBarView.swift */; };
 		4F2CEE9E730647ED6CC9B5D8 /* ParlanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */; };
@@ -94,6 +95,7 @@
 		1FEE4D769E2078E784C1A7A7 /* HeadingStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingStructure.swift; sourceTree = "<group>"; };
 		34C17F65FCA289282274A050 /* SourceEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorExtension.swift; sourceTree = "<group>"; };
 		3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParlanceApp.swift; sourceTree = "<group>"; };
+		429657E1D2BEF7DA0DEC3755 /* ParlanceTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParlanceTheme.swift; sourceTree = "<group>"; };
 		54A083EB327854B1F3894170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6CFA25A0D4F4B36CE997E168 /* SwiftAuditEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAuditEngine.swift; sourceTree = "<group>"; };
 		71A9BAB789FDC527D7535378 /* AuditResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditResult.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				7A79AF8F8C182DD5CBFFF5D1 /* Info.plist */,
+				429657E1D2BEF7DA0DEC3755 /* ParlanceTheme.swift */,
 				EB03E75A5C719621415BDF64 /* API */,
 				1AE5879ED876676E0F07305A /* Audit */,
 				1E3001AE7C9A69D6782D4426 /* Models */,
@@ -421,6 +424,7 @@
 				389D7281277050BE8914FA7D /* KeyboardAccess.swift in Sources */,
 				E289BAFC43E522C2D72317A4 /* KeychainHelper.swift in Sources */,
 				CC9DE67CAA9582943E4E26FC /* ParlanceClientProvider.swift in Sources */,
+				2501B9C5A952E6EBE6B7A993 /* ParlanceTheme.swift in Sources */,
 				DC96A22EE4D5B6E76AB8AB52 /* SwiftAuditEngine.swift in Sources */,
 				7F8A282617CAA102B71E045B /* TouchTargetSize.swift in Sources */,
 			);
