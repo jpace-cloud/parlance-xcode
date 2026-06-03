@@ -26,6 +26,16 @@ schemes:
       config: Debug
     archive:
       config: Release
+  ParlanceKitTests:
+    build:
+      targets:
+        ParlanceKit: all
+        ParlanceKitTests: [test]
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - ParlanceKitTests
 
 targets:
   ParlanceKit:
@@ -44,6 +54,20 @@ targets:
         SWIFT_VERSION: "5.9"
         DEFINES_MODULE: YES
         SKIP_INSTALL: YES
+
+  ParlanceKitTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/ParlanceKit
+    dependencies:
+      - target: ParlanceKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.kit.tests
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: YES
 
   ParlanceEditor:
     type: app-extension

@@ -11,22 +11,27 @@
 		1163CBD7543EFAE5CC752016 /* DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96280704548045F30DC3AF3D /* DynamicType.swift */; };
 		18DDFB75536A12130F002D2E /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */; };
 		2501B9C5A952E6EBE6B7A993 /* ParlanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429657E1D2BEF7DA0DEC3755 /* ParlanceTheme.swift */; };
+		29EF1CB076DA201F64AE9149 /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
 		389D7281277050BE8914FA7D /* KeyboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E40AEB0EB58C5124636B84 /* KeyboardAccess.swift */; };
 		47D784E62BD37324FD107970 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8D061C06DD6230FEBF390 /* MenuBarView.swift */; };
 		4F2CEE9E730647ED6CC9B5D8 /* ParlanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */; };
 		52FF18AAA3E411DC0D7F7006 /* AuditRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FC57450800EE409AA0BE5 /* AuditRule.swift */; };
 		53700824776A3A9BA214665D /* HeadingStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE4D769E2078E784C1A7A7 /* HeadingStructure.swift */; };
+		583AC9C0C18C456DA2DEE9D3 /* AuditRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4125C7EE97F886BEBEE0E8F /* AuditRuleTests.swift */; };
 		5BD136882280A6BF90A021A5 /* AuditResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A9BAB789FDC527D7535378 /* AuditResult.swift */; };
 		5C19520AD3F99F61C094CC20 /* SourceEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C17F65FCA289282274A050 /* SourceEditorExtension.swift */; };
 		5CD1B39742FA54906B90D3DA /* FormLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8E7AC6ED067A13D347A6CD /* FormLabels.swift */; };
 		765BD3AB984877BC69515266 /* ColorContrast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D343585EC07D8D37E0126894 /* ColorContrast.swift */; };
+		77DD29AF5E1D219865C72F62 /* AuditSummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1DB2969EA5C5762CE26FD8 /* AuditSummaryTests.swift */; };
 		7F8A282617CAA102B71E045B /* TouchTargetSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B737502B68290C83AFAD21F9 /* TouchTargetSize.swift */; };
 		82A06D42E89130D26BF63C69 /* SourceEditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB646F48BCC8194E3E522337 /* SourceEditorCommand.swift */; };
 		8F0B7B5B054434D805B61EE6 /* ColorOnlyIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F399B1E3B20E9804B191512F /* ColorOnlyIndicators.swift */; };
+		931C649E7FB2CD24E42AEE5C /* SwiftAuditEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664A3C9DB55F741F1587E09E /* SwiftAuditEngineTests.swift */; };
 		938A4A01361C12468B79CDCD /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */; };
 		95350193B83278374AC516FA /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
 		C021E0B9E6779AB4BEB9AB64 /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
 		C340F43AFDBD433111C8CF25 /* AuditExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE002050AF1B32FC7D75348 /* AuditExporter.swift */; };
+		C90D5D6DA696E7EF68C10AA5 /* ParlanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC9DE67CAA9582943E4E26FC /* ParlanceClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DE2EAB77ECE8184EF8A89C /* ParlanceClientProvider.swift */; };
 		CE892FCDCA71690A3E73D6CE /* ParlanceEditor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D114DA3AD78F9643FD8D9BA1 /* ParlanceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -46,6 +51,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 82D806DA0B86ADCA6B89835F;
 			remoteInfo = ParlanceEditor;
+		};
+		24C75126520A4E8C3E208CDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 454808E19A70AFCB2942BE5F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E893FDF7814A574BEC71F4B0;
+			remoteInfo = ParlanceKit;
 		};
 		298F93FACCF4A3D91855E257 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -86,6 +98,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CC91C9FDEBAAF557094BEAE4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C90D5D6DA696E7EF68C10AA5 /* ParlanceKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -97,7 +120,9 @@
 		3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParlanceApp.swift; sourceTree = "<group>"; };
 		429657E1D2BEF7DA0DEC3755 /* ParlanceTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParlanceTheme.swift; sourceTree = "<group>"; };
 		54A083EB327854B1F3894170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		664A3C9DB55F741F1587E09E /* SwiftAuditEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAuditEngineTests.swift; sourceTree = "<group>"; };
 		6CFA25A0D4F4B36CE997E168 /* SwiftAuditEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAuditEngine.swift; sourceTree = "<group>"; };
+		6D1DB2969EA5C5762CE26FD8 /* AuditSummaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditSummaryTests.swift; sourceTree = "<group>"; };
 		71A9BAB789FDC527D7535378 /* AuditResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditResult.swift; sourceTree = "<group>"; };
 		7939F3D0BDCBD9B2B849BE7B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		7A79AF8F8C182DD5CBFFF5D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -107,11 +132,13 @@
 		96280704548045F30DC3AF3D /* DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicType.swift; sourceTree = "<group>"; };
 		99DE2EAB77ECE8184EF8A89C /* ParlanceClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParlanceClientProvider.swift; sourceTree = "<group>"; };
 		9B5FC57450800EE409AA0BE5 /* AuditRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditRule.swift; sourceTree = "<group>"; };
+		9DB660DDB26856A7D5768997 /* ParlanceKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParlanceKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB646F48BCC8194E3E522337 /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
 		B0602A497391E21F37EC709C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B1A3907AE6D1C3E73FBA9569 /* ParlanceEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ParlanceEditor.entitlements; sourceTree = "<group>"; };
 		B737502B68290C83AFAD21F9 /* TouchTargetSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTargetSize.swift; sourceTree = "<group>"; };
 		D343585EC07D8D37E0126894 /* ColorContrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrast.swift; sourceTree = "<group>"; };
+		D4125C7EE97F886BEBEE0E8F /* AuditRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditRuleTests.swift; sourceTree = "<group>"; };
 		D6CDB07EB72B9DA2D70B9BB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ParlanceEditor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFE002050AF1B32FC7D75348 /* AuditExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditExporter.swift; sourceTree = "<group>"; };
@@ -147,6 +174,14 @@
 			files = (
 				C021E0B9E6779AB4BEB9AB64 /* ParlanceKit.framework in Frameworks */,
 				18DDFB75536A12130F002D2E /* XcodeKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C43E097296B22A7BF171AC2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29EF1CB076DA201F64AE9149 /* ParlanceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +252,7 @@
 				FAE51026264A37DE72E0D663 /* Parlance.app */,
 				DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */,
 				1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */,
+				9DB660DDB26856A7D5768997 /* ParlanceKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,9 +263,21 @@
 				1D1FFD727DA3016C4D893B86 /* Parlance */,
 				0DADC48B4647AB9AF0A92F08 /* ParlanceEditor */,
 				211AF5E942F5188A2EDF958D /* ParlanceKit */,
+				843EBDF237AA0FFEFD20091A /* ParlanceKit */,
 				C577FC664F72C77BD439FCF4 /* Frameworks */,
 				535776FC87E0212BBBB0000A /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		843EBDF237AA0FFEFD20091A /* ParlanceKit */ = {
+			isa = PBXGroup;
+			children = (
+				D4125C7EE97F886BEBEE0E8F /* AuditRuleTests.swift */,
+				6D1DB2969EA5C5762CE26FD8 /* AuditSummaryTests.swift */,
+				664A3C9DB55F741F1587E09E /* SwiftAuditEngineTests.swift */,
+			);
+			name = ParlanceKit;
+			path = Tests/ParlanceKit;
 			sourceTree = "<group>";
 		};
 		99F163BAD1981EC217E048E5 /* Rules */ = {
@@ -320,6 +368,26 @@
 			productReference = DB12F8910F9A4CAD685F359A /* ParlanceEditor.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		830FBE972E40056D8D4AAA1B /* ParlanceKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2D00AFE167E4307D30C21D9 /* Build configuration list for PBXNativeTarget "ParlanceKitTests" */;
+			buildPhases = (
+				6265F983C9BE5FE5D8F4E23D /* Sources */,
+				C43E097296B22A7BF171AC2D /* Frameworks */,
+				CC91C9FDEBAAF557094BEAE4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81CD1DAFB51EB577F7E66ABD /* PBXTargetDependency */,
+			);
+			name = ParlanceKitTests;
+			packageProductDependencies = (
+			);
+			productName = ParlanceKitTests;
+			productReference = 9DB660DDB26856A7D5768997 /* ParlanceKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E893FDF7814A574BEC71F4B0 /* ParlanceKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 628C955A02A9D29B1E0FE94D /* Build configuration list for PBXNativeTarget "ParlanceKit" */;
@@ -370,6 +438,7 @@
 				69CD126DBD798199B8240D83 /* Parlance */,
 				82D806DA0B86ADCA6B89835F /* ParlanceEditor */,
 				E893FDF7814A574BEC71F4B0 /* ParlanceKit */,
+				830FBE972E40056D8D4AAA1B /* ParlanceKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -407,6 +476,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6265F983C9BE5FE5D8F4E23D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				583AC9C0C18C456DA2DEE9D3 /* AuditRuleTests.swift in Sources */,
+				77DD29AF5E1D219865C72F62 /* AuditSummaryTests.swift in Sources */,
+				931C649E7FB2CD24E42AEE5C /* SwiftAuditEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		684C468C99FB88F7270D9206 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -438,6 +517,11 @@
 			target = E893FDF7814A574BEC71F4B0 /* ParlanceKit */;
 			targetProxy = 7B839B7E19B58F7EF4A8D26D /* PBXContainerItemProxy */;
 		};
+		81CD1DAFB51EB577F7E66ABD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E893FDF7814A574BEC71F4B0 /* ParlanceKit */;
+			targetProxy = 24C75126520A4E8C3E208CDC /* PBXContainerItemProxy */;
+		};
 		97515F6F773DE2E0E0E0D45F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E893FDF7814A574BEC71F4B0 /* ParlanceKit */;
@@ -451,6 +535,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		11EDF7FF664B20D540B30986 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = business.parlance.xcode.kit.tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
 		2A9FF4295B37105F4C7E3B27 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -535,6 +637,24 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		89C15E608C3ED91626DEB2E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = business.parlance.xcode.kit.tests;
+				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
 			};
 			name = Debug;
@@ -722,6 +842,15 @@
 			buildConfigurations = (
 				DA1C4EDE2B41823E8F94B57B /* Debug */,
 				9CB04988CA295FEA39FF374A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E2D00AFE167E4307D30C21D9 /* Build configuration list for PBXNativeTarget "ParlanceKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C15E608C3ED91626DEB2E6 /* Debug */,
+				11EDF7FF664B20D540B30986 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

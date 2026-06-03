@@ -33,7 +33,12 @@ public struct ColorContrastRule: AuditRule {
 
                 for (fg, bg) in lowContrastPairs {
                     if window.contains(fg) && window.contains(".background(") {
-                        if window.contains(bg) || window.contains("Color.white") || window.contains(".white)") {
+                        // Require the actual background colour of the pair — `bg`
+                        // (e.g. ".white") already substring-matches "Color.white",
+                        // so this still catches `.gray`-on-white without the old
+                        // unconditional `Color.white` fallback that flagged any
+                        // foreground (incl. high-contrast `.primary`/`.black`).
+                        if window.contains(bg) {
                             results.append(AuditResult(
                                 ruleId: id,
                                 ruleName: name,
