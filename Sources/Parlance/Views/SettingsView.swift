@@ -115,8 +115,11 @@ struct SettingsView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 )
 
-            Text("parlance")
-                .font(.system(size: 16, weight: .semibold))
+            Image("Parlance_Logo_row")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 22)
+                .accessibilityLabel("parlance")
 
             Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
                 .font(.caption)

@@ -1,4 +1,10 @@
-# Parlance for Xcode
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/Parlance_Logo_row_Dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/Parlance_Logo_row_Light.svg">
+  <img alt="parlance" src="assets/Parlance_Logo_row_Light.svg" height="48">
+</picture>
+
+# parlance for Xcode
 
 Accessibility audit and design contract tooling for Swift/SwiftUI developers. Runs inside Xcode as a Source Editor Extension and in the menu bar as a companion app.
 
