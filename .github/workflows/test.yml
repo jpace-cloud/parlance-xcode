@@ -15,7 +15,7 @@ jobs:
     # project format. macos-14 (Xcode 15.4) cannot open it.
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install XcodeGen
         run: brew install xcodegen
       - name: Generate project
