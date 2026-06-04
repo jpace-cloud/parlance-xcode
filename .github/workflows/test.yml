@@ -11,7 +11,9 @@ concurrency:
 
 jobs:
   test:
-    runs-on: macos-14
+    # macos-15 ships Xcode 16.x — required to read XcodeGen's objectVersion 77
+    # project format. macos-14 (Xcode 15.4) cannot open it.
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - name: Install XcodeGen
