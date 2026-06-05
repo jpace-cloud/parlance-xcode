@@ -7,6 +7,9 @@ struct SettingsView: View {
     @State private var isTesting: Bool = false
     @State private var testResult: TestResult? = nil
 
+    /// Mirrors the same AppStorage key written by ParlanceApp.
+    @AppStorage("appearanceMode") private var appearanceModeRaw = AppearanceMode.dark.rawValue
+
     enum TestResult {
         case success, failure(String)
     }
@@ -95,6 +98,16 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.menu)
                 }
+            }
+
+            Section("Appearance") {
+                Picker("Theme", selection: $appearanceModeRaw) {
+                    ForEach(AppearanceMode.allCases, id: \.rawValue) { mode in
+                        Label(mode.label, systemImage: mode.systemImage)
+                            .tag(mode.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
             }
         }
         .formStyle(.grouped)

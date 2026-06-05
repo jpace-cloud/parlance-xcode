@@ -13,6 +13,7 @@
 		2501B9C5A952E6EBE6B7A993 /* ParlanceTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429657E1D2BEF7DA0DEC3755 /* ParlanceTheme.swift */; };
 		29EF1CB076DA201F64AE9149 /* ParlanceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */; };
 		389D7281277050BE8914FA7D /* KeyboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E40AEB0EB58C5124636B84 /* KeyboardAccess.swift */; };
+		3C01666F71F8A6EDCBD30FCC /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE38A7FCBB0E53416882D8E /* AppearanceMode.swift */; };
 		47D784E62BD37324FD107970 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B8D061C06DD6230FEBF390 /* MenuBarView.swift */; };
 		4F2CEE9E730647ED6CC9B5D8 /* ParlanceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */; };
 		52FF18AAA3E411DC0D7F7006 /* AuditRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5FC57450800EE409AA0BE5 /* AuditRule.swift */; };
@@ -115,6 +116,7 @@
 		09CAF49DA102E2F0BF1CEEEF /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = ../../../../Applications/Xcode.app/Contents/Developer/Library/Frameworks/XcodeKit.framework; sourceTree = "<group>"; };
 		1A79BCF9B56C8ED984E83B2D /* ParlanceKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ParlanceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		1FE38A7FCBB0E53416882D8E /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		1FEE4D769E2078E784C1A7A7 /* HeadingStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingStructure.swift; sourceTree = "<group>"; };
 		34C17F65FCA289282274A050 /* SourceEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorExtension.swift; sourceTree = "<group>"; };
 		3F2A36776FAB8E94B3B655FA /* ParlanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParlanceApp.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 		1D1FFD727DA3016C4D893B86 /* Parlance */ = {
 			isa = PBXGroup;
 			children = (
+				1FE38A7FCBB0E53416882D8E /* AppearanceMode.swift */,
 				1BCA75549A02E7A6A9D7E2B2 /* AppState.swift */,
 				D6CDB07EB72B9DA2D70B9BB1 /* Assets.xcassets */,
 				DFE002050AF1B32FC7D75348 /* AuditExporter.swift */,
@@ -469,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938A4A01361C12468B79CDCD /* AppState.swift in Sources */,
+				3C01666F71F8A6EDCBD30FCC /* AppearanceMode.swift in Sources */,
 				C340F43AFDBD433111C8CF25 /* AuditExporter.swift in Sources */,
 				47D784E62BD37324FD107970 /* MenuBarView.swift in Sources */,
 				4F2CEE9E730647ED6CC9B5D8 /* ParlanceApp.swift in Sources */,
