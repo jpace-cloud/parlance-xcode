@@ -9,6 +9,10 @@ import ParlanceSDK
 
 public enum ParlanceClientProvider {
 
+    /// The live parlance REST API. Set explicitly so the client never relies on
+    /// the separately-pinned SDK's compiled-in default base URL.
+    public static let baseURL = "https://api.parlancelabs.net"
+
     private static var bundleVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
     }
@@ -18,6 +22,7 @@ public enum ParlanceClientProvider {
         guard let key = KeychainHelper.getAPIKey(), !key.isEmpty else { return nil }
         return ParlanceClient(
             apiKey: key,
+            baseURL: baseURL,
             clientName: "xcode-extension/\(bundleVersion)"
         )
     }
@@ -26,6 +31,7 @@ public enum ParlanceClientProvider {
     public static func make(apiKey: String) -> ParlanceClient {
         ParlanceClient(
             apiKey: apiKey,
+            baseURL: baseURL,
             clientName: "xcode-extension/\(bundleVersion)"
         )
     }

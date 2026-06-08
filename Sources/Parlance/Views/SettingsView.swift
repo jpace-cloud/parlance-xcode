@@ -144,8 +144,8 @@ struct SettingsView: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 280)
 
-            if let url = URL(string: "https://parlance.business") {
-                Link("parlance.business", destination: url)
+            if let url = URL(string: "https://parlancelabs.net") {
+                Link("parlancelabs.net", destination: url)
                     .font(.caption)
                     .foregroundStyle(Color.parlance.primary)
             }
