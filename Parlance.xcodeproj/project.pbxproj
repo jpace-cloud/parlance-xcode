@@ -876,7 +876,7 @@
 			repositoryURL = "https://github.com/jpace-cloud/parlance-swift-sdk.git";
 			requirement = {
 				kind = revision;
-				revision = 3176f8d1ad2793de08901e4e82639e1d6104b983;
+				revision = a4a452bd2cd55b96ddf3e679982f037708cee497;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
