@@ -1,12 +1,13 @@
 import SwiftUI
 import ParlanceKit
+import ParlanceSDK
 
 struct MenuBarView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.openSettings) private var openSettings
     @State private var selectedTab: Tab = .contracts
     @State private var glossarySearch = ""
-    @State private var selectedContract: Contract? = nil
+    @State private var selectedContract: ContractSummary? = nil
     @State private var selectedTerm: GlossaryTerm? = nil
     enum Tab: String, CaseIterable {
         case contracts = "Contracts"
@@ -17,7 +18,7 @@ struct MenuBarView: View {
     var body: some View {
         VStack(spacing: 0) {
             header
-            Divider().opacity(0.3)
+            Divider().opacity(0.15)
 
             if !appState.isConnected {
                 disconnectedView
@@ -34,25 +35,27 @@ struct MenuBarView: View {
     private var header: some View {
         HStack {
             HStack(spacing: 6) {
-                Image("LogoMark")
+                Image("Parlance_Icon_Dark")
                     .resizable()
                     .renderingMode(.template)
-                    .foregroundStyle(parlancePurple)
+                    .foregroundStyle(Color.parlance.primary)
                     .frame(width: 16, height: 16)
-                Text("Parlance")
-                    .font(.system(size: 14, weight: .bold))
+                Text("parlance")
+                    .font(.system(size: 13, weight: .semibold))
             }
             Spacer()
             Circle()
-                .fill(appState.isConnected ? Color.green : Color(NSColor.systemGray))
-                .frame(width: 8, height: 8)
+                .fill(appState.isConnected ? Color.parlance.pass : Color(NSColor.systemGray))
+                .frame(width: 7, height: 7)
             Button {
                 openSettings()
             } label: {
                 Image(systemName: "gearshape")
                     .foregroundStyle(.secondary)
+                    .font(.system(size: 12))
             }
             .buttonStyle(.plain)
+            .help("Settings")
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
@@ -63,11 +66,11 @@ struct MenuBarView: View {
     private var disconnectedView: some View {
         VStack(spacing: 12) {
             Image(systemName: "wifi.slash")
-                .font(.system(size: 32))
-                .foregroundStyle(.secondary)
+                .font(.system(size: 28))
+                .foregroundStyle(.tertiary)
             Text("Not connected")
-                .font(.headline)
-            Text("Add your Parlance API key in Settings to get started.")
+                .font(.system(size: 13, weight: .semibold))
+            Text("Add your parlance API key in Settings to get started.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -86,16 +89,19 @@ struct MenuBarView: View {
         VStack(spacing: 0) {
             // Project name bar
             if let project = appState.selectedProject {
-                HStack(spacing: 6) {
-                    Circle().fill(Color.green).frame(width: 6, height: 6)
+                HStack(spacing: 5) {
+                    Circle()
+                        .fill(Color.parlance.pass)
+                        .frame(width: 5, height: 5)
                     Text(project.name)
-                        .font(.caption)
+                        .font(.caption2)
                         .fontWeight(.medium)
+                        .foregroundStyle(.secondary)
                     Spacer()
                 }
                 .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(Color(NSColor.controlBackgroundColor))
+                .padding(.vertical, 5)
+                .background(Color(NSColor.controlBackgroundColor).opacity(0.6))
             }
 
             // Tab bar
@@ -105,10 +111,10 @@ struct MenuBarView: View {
                         .buttonStyle(TabButtonStyle(isSelected: selectedTab == tab))
                 }
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 10)
             .padding(.top, 8)
 
-            Divider().padding(.top, 6).opacity(0.3)
+            Divider().padding(.top, 6).opacity(0.15)
 
             // Tab content
             Group {
@@ -120,7 +126,7 @@ struct MenuBarView: View {
             }
             .frame(maxHeight: 340)
 
-            Divider().opacity(0.3)
+            Divider().opacity(0.15)
             syncFooter
         }
     }
@@ -141,29 +147,30 @@ struct MenuBarView: View {
 
     private var contractList: some View {
         ScrollView {
-            LazyVStack(spacing: 1) {
+            LazyVStack(spacing: 0) {
                 ForEach(appState.contracts) { contract in
                     ContractRow(contract: contract)
                         .onTapGesture { selectedContract = contract }
+                    Divider().opacity(0.1)
                 }
             }
             .padding(.vertical, 4)
         }
     }
 
-    private func contractDetail(_ contract: Contract) -> some View {
+    private func contractDetail(_ contract: ContractSummary) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Button {
                 selectedContract = nil
             } label: {
                 Label("Back", systemImage: "chevron.left")
                     .font(.caption)
-                    .foregroundStyle(parlancePurple)
+                    .foregroundStyle(Color.parlance.primary)
             }
             .buttonStyle(.plain)
 
             Text(contract.name)
-                .font(.headline)
+                .font(.system(size: 13, weight: .semibold))
 
             if let desc = contract.description {
                 Text(desc)
@@ -173,11 +180,12 @@ struct MenuBarView: View {
 
             HStack(spacing: 6) {
                 if let category = contract.category {
-                    Badge(text: category, color: .secondary)
+                    ParlanceBadge(text: category.rawValue, color: .secondary)
                 }
-                if let status = contract.status {
-                    Badge(text: status, color: statusColor(status))
-                }
+                ParlanceBadge(
+                    text: contract.status.rawValue,
+                    color: contractStatusColor(contract.status.rawValue)
+                )
             }
             Spacer()
         }
@@ -189,8 +197,10 @@ struct MenuBarView: View {
 
     private var glossaryTab: some View {
         VStack(spacing: 0) {
-            HStack {
-                Image(systemName: "magnifyingglass").foregroundStyle(.secondary).font(.caption)
+            HStack(spacing: 6) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.tertiary)
+                    .font(.caption)
                 TextField("Search tokens…", text: $glossarySearch)
                     .textFieldStyle(.plain)
                     .font(.caption)
@@ -198,8 +208,10 @@ struct MenuBarView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(Color(NSColor.controlBackgroundColor))
-            .cornerRadius(6)
-            .padding(8)
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .padding(.horizontal, 10)
+            .padding(.top, 8)
+            .padding(.bottom, 4)
 
             if appState.glossaryTerms.isEmpty {
                 emptyState(icon: "textformat.abc", message: "No glossary terms found")
@@ -210,10 +222,11 @@ struct MenuBarView: View {
                     ? appState.glossaryTerms
                     : appState.glossaryTerms.filter { $0.name.localizedCaseInsensitiveContains(glossarySearch) }
                 ScrollView {
-                    LazyVStack(spacing: 1) {
+                    LazyVStack(spacing: 0) {
                         ForEach(filtered) { term in
                             GlossaryRow(term: term)
                                 .onTapGesture { selectedTerm = term }
+                            Divider().opacity(0.1)
                         }
                     }
                     .padding(.bottom, 4)
@@ -229,21 +242,29 @@ struct MenuBarView: View {
             } label: {
                 Label("Back", systemImage: "chevron.left")
                     .font(.caption)
-                    .foregroundStyle(parlancePurple)
+                    .foregroundStyle(Color.parlance.primary)
             }
             .buttonStyle(.plain)
 
-            Text(term.name).font(.headline)
-            if let raw = term.rawValue {
-                Text(raw).font(.caption.monospaced()).foregroundStyle(.secondary)
+            Text(term.name)
+                .font(.system(size: 13, weight: .semibold))
+
+            if !term.rawValue.isEmpty {
+                Text(term.rawValue)
+                    .font(.caption.monospaced())
+                    .foregroundStyle(.secondary)
             }
-            if let translations = term.translations, !translations.isEmpty {
-                Text("Translations").font(.caption).fontWeight(.semibold).padding(.top, 4)
-                ForEach(Array(translations.keys.sorted()), id: \.self) { key in
+
+            if !term.translations.isEmpty {
+                Text("Translations")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .padding(.top, 4)
+                ForEach(Array(term.translations.keys.sorted()), id: \.self) { key in
                     HStack {
                         Text(key).font(.caption).foregroundStyle(.secondary)
                         Spacer()
-                        Text(translations[key] ?? "").font(.caption)
+                        Text(term.translations[key] ?? "").font(.caption.monospaced())
                     }
                 }
             }
@@ -260,11 +281,12 @@ struct MenuBarView: View {
             VStack(spacing: 6) {
                 Image(systemName: "checkmark.shield")
                     .font(.system(size: 24))
-                    .foregroundStyle(parlancePurple)
+                    .foregroundStyle(Color.parlance.primary)
                 Text("Audit from Clipboard")
-                    .font(.subheadline).fontWeight(.medium)
+                    .font(.system(size: 12, weight: .semibold))
                 Text("Copy Swift source code, then tap Audit.")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                 Button("Run Audit on Clipboard") {
                     appState.runAuditOnClipboard()
@@ -274,12 +296,14 @@ struct MenuBarView: View {
             .padding(.top, 16)
 
             if let summary = appState.latestAuditSummary {
-                Divider().opacity(0.3)
+                Divider().opacity(0.15)
                 auditResults(summary)
             }
 
             if let err = appState.errorMessage {
-                Text(err).font(.caption).foregroundStyle(.red)
+                Text(err)
+                    .font(.caption)
+                    .foregroundStyle(Color.parlance.fail)
                     .padding(.horizontal, 12)
                     .multilineTextAlignment(.center)
             }
@@ -292,15 +316,15 @@ struct MenuBarView: View {
     private func auditResults(_ summary: AuditSummary) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             // Score chips
-            HStack {
-                scoreChip(label: "Errors", count: summary.errors, color: .red)
-                scoreChip(label: "Warnings", count: summary.warnings, color: .orange)
-                scoreChip(label: "Score", count: summary.score, color: parlancePurple)
+            HStack(spacing: 6) {
+                scoreChip(label: "Errors",   count: summary.errors,   color: .parlance.fail)
+                scoreChip(label: "Warnings", count: summary.warnings, color: .parlance.warning)
+                scoreChip(label: "Score",    count: summary.score,    color: .parlance.primary)
             }
 
             // Findings list
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 6) {
+                LazyVStack(alignment: .leading, spacing: 4) {
                     ForEach(summary.results) { result in
                         AuditResultRow(result: result)
                     }
@@ -332,8 +356,8 @@ struct MenuBarView: View {
                 }
                 .buttonStyle(ParlanceButtonStyle(compact: true))
                 .disabled(true)
-                .opacity(0.5)
-                .help("Push to dashboard coming in v0.2")
+                .opacity(0.4)
+                .help("Push to dashboard — coming in v0.2")
             }
             .font(.caption2)
         }
@@ -341,13 +365,17 @@ struct MenuBarView: View {
 
     private func scoreChip(label: String, count: Int, color: Color) -> some View {
         VStack(spacing: 2) {
-            Text("\(count)").font(.headline).foregroundStyle(color)
-            Text(label).font(.caption2).foregroundStyle(.secondary)
+            Text("\(count)")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(color)
+            Text(label)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 6)
+        .padding(.vertical, 8)
         .background(Color(NSColor.controlBackgroundColor))
-        .cornerRadius(6)
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 
     // MARK: - Sync Footer
@@ -357,11 +385,11 @@ struct MenuBarView: View {
             if let date = appState.lastSyncDate {
                 Text("Synced \(date, style: .relative) ago")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.tertiary)
             } else {
                 Text("Never synced")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.tertiary)
             }
             Spacer()
             Button("Sync now") {
@@ -369,7 +397,7 @@ struct MenuBarView: View {
             }
             .font(.caption2)
             .buttonStyle(.plain)
-            .foregroundStyle(parlancePurple)
+            .foregroundStyle(Color.parlance.primary)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -379,19 +407,24 @@ struct MenuBarView: View {
 
     private func emptyState(icon: String, message: String) -> some View {
         VStack(spacing: 8) {
-            Image(systemName: icon).font(.system(size: 28)).foregroundStyle(.secondary)
-            Text(message).font(.caption).foregroundStyle(.secondary)
+            Image(systemName: icon)
+                .font(.system(size: 26))
+                .foregroundStyle(.tertiary)
+            Text(message)
+                .font(.caption)
+                .foregroundStyle(.tertiary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
     }
 
-    private func statusColor(_ status: String) -> Color {
+    private func contractStatusColor(_ status: String) -> Color {
         switch status.lowercased() {
-        case "agreed": return .green
-        case "proposed": return .orange
-        case "divergent": return .red
-        default: return .secondary
+        case "active":     return .parlance.pass
+        case "draft":      return .parlance.warning
+        case "deprecated": return .parlance.fail
+        case "proposed":   return .parlance.pending
+        default:           return .secondary
         }
     }
 }
@@ -399,20 +432,25 @@ struct MenuBarView: View {
 // MARK: - Subviews
 
 struct ContractRow: View {
-    let contract: Contract
+    let contract: ContractSummary
 
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(contract.name).font(.caption).fontWeight(.medium)
+                Text(contract.name)
+                    .font(.caption)
+                    .fontWeight(.medium)
                 if let category = contract.category {
-                    Text(category).font(.caption2).foregroundStyle(.secondary)
+                    Text(category.rawValue)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                 }
             }
             Spacer()
-            if let status = contract.status {
-                Badge(text: status, color: statusColor(status))
-            }
+            ParlanceBadge(
+                text: contract.status.rawValue,
+                color: contractStatusColor(contract.status.rawValue)
+            )
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -420,12 +458,13 @@ struct ContractRow: View {
         .contentShape(Rectangle())
     }
 
-    private func statusColor(_ status: String) -> Color {
+    private func contractStatusColor(_ status: String) -> Color {
         switch status.lowercased() {
-        case "agreed": return .green
-        case "proposed": return .orange
-        case "divergent": return .red
-        default: return .secondary
+        case "active":     return .parlance.pass
+        case "draft":      return .parlance.warning
+        case "deprecated": return .parlance.fail
+        case "proposed":   return .parlance.pending
+        default:           return .secondary
         }
     }
 }
@@ -436,14 +475,18 @@ struct GlossaryRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(term.name).font(.caption).fontWeight(.medium)
-                if let raw = term.rawValue {
-                    Text(raw).font(.caption2.monospaced()).foregroundStyle(.secondary)
+                Text(term.name)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                if !term.rawValue.isEmpty {
+                    Text(term.rawValue)
+                        .font(.caption2.monospaced())
+                        .foregroundStyle(.secondary)
                 }
             }
             Spacer()
-            if let category = term.category {
-                Badge(text: category, color: .secondary)
+            if !term.category.isEmpty {
+                ParlanceBadge(text: term.category, color: .secondary)
             }
         }
         .padding(.horizontal, 12)
@@ -453,54 +496,66 @@ struct GlossaryRow: View {
 }
 
 struct AuditResultRow: View {
-    let result: AuditResult
+    let result: ParlanceKit.AuditResult
 
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             Image(systemName: severityIcon)
                 .foregroundStyle(severityColor)
                 .font(.caption)
+                .frame(width: 12)
             VStack(alignment: .leading, spacing: 2) {
-                HStack {
-                    Text(result.ruleName).font(.caption).fontWeight(.medium)
+                HStack(spacing: 4) {
+                    Text(result.ruleName)
+                        .font(.caption)
+                        .fontWeight(.medium)
                     if let line = result.line {
-                        Text("L\(line)").font(.caption2.monospaced()).foregroundStyle(.secondary)
+                        Text("L\(line)")
+                            .font(.caption2.monospaced())
+                            .foregroundStyle(.secondary)
                     }
                 }
-                Text(result.message).font(.caption2).foregroundStyle(.secondary).lineLimit(2)
+                Text(result.message)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
             }
         }
+        .padding(.vertical, 2)
     }
 
     private var severityIcon: String {
         switch result.severity {
-        case .error: return "xmark.circle.fill"
+        case .error:   return "xmark.circle.fill"
         case .warning: return "exclamationmark.triangle.fill"
-        case .info: return "info.circle.fill"
+        case .info:    return "info.circle.fill"
         }
     }
 
     private var severityColor: Color {
         switch result.severity {
-        case .error: return .red
-        case .warning: return .orange
-        case .info: return .blue
+        case .error:   return .parlance.fail
+        case .warning: return .parlance.warning
+        case .info:    return .parlance.pending
         }
     }
 }
 
-struct Badge: View {
+// MARK: - Badge
+
+struct ParlanceBadge: View {
     let text: String
     let color: Color
 
     var body: some View {
         Text(text)
             .font(.caption2)
+            .fontWeight(.medium)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
-            .background(color.opacity(0.15))
+            .background(color.opacity(0.12))
             .foregroundStyle(color)
-            .cornerRadius(4)
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
     }
 }
 
@@ -515,9 +570,12 @@ struct ParlanceButtonStyle: ButtonStyle {
             .fontWeight(.medium)
             .padding(.horizontal, compact ? 10 : 14)
             .padding(.vertical, compact ? 5 : 7)
-            .background(parlancePurple.opacity(configuration.isPressed ? 0.7 : 1))
+            .background(
+                Color.parlance.primary
+                    .opacity(configuration.isPressed ? 0.75 : 1)
+            )
             .foregroundStyle(.white)
-            .cornerRadius(6)
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }
 
@@ -530,7 +588,7 @@ struct ExportButtonStyle: ButtonStyle {
             .padding(.vertical, 5)
             .background(Color(NSColor.controlBackgroundColor))
             .foregroundStyle(.primary)
-            .cornerRadius(5)
+            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
             .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
@@ -544,12 +602,14 @@ struct TabButtonStyle: ButtonStyle {
             .fontWeight(isSelected ? .semibold : .regular)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
-            .background(isSelected ? parlancePurple.opacity(0.15) : Color.clear)
-            .foregroundStyle(isSelected ? parlancePurple : Color.secondary)
-            .cornerRadius(5)
+            .background(
+                isSelected
+                    ? Color.parlance.primary.opacity(0.12)
+                    : Color.clear
+            )
+            .foregroundStyle(
+                isSelected ? Color.parlance.primary : Color.secondary
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
     }
 }
-
-// MARK: - Shared color
-
-let parlancePurple = Color(red: 0.486, green: 0.227, blue: 0.929) // #7C3AED — brand purple-500

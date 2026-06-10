@@ -198,7 +198,7 @@ enum AuditExporter {
             ctx.addLine(to: CGPoint(x: margin + contentW, y: footerY))
             ctx.strokePath()
 
-            text("Exported from Parlance Xcode Extension — parlance.business",
+            text("Exported from Parlance Xcode Extension — parlancelabs.net",
                  ctx, r: rect(footerY + 2, x: margin, w: contentW - 50, h: 10),
                  font: .systemFont(ofSize: 7), color: clrSec)
             text("Page \(pageNum)",

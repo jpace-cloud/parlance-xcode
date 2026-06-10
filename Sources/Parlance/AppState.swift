@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import ParlanceKit
+import ParlanceSDK
 
 @MainActor
 class AppState: ObservableObject {
@@ -9,13 +10,13 @@ class AppState: ObservableObject {
     @Published var errorMessage: String? = nil
     @Published var selectedProject: Project? = nil
     @Published var projects: [Project] = []
-    @Published var contracts: [Contract] = []
+    @Published var contracts: [ContractSummary] = []
     @Published var glossaryTerms: [GlossaryTerm] = []
     @Published var lastSyncDate: Date? = nil
     @Published var latestAuditSummary: AuditSummary? = nil
 
     private var refreshTimer: Timer?
-    private var client: ParlanceAPIClient? = nil
+    private var client: ParlanceClient? = nil
 
     var apiKey: String? {
         get { KeychainHelper.getAPIKey() }
@@ -23,7 +24,7 @@ class AppState: ObservableObject {
 
     init() {
         if let key = KeychainHelper.getAPIKey(), !key.isEmpty {
-            client = ParlanceAPIClient(apiKey: key)
+            client = ParlanceClientProvider.make(apiKey: key)
             Task { await connect() }
         }
         startAutoRefresh()
@@ -36,7 +37,7 @@ class AppState: ObservableObject {
         }
         isLoading = true
         errorMessage = nil
-        let c = ParlanceAPIClient(apiKey: key)
+        let c = ParlanceClientProvider.make(apiKey: key)
         do {
             _ = try await c.testConnection()
             client = c
@@ -80,7 +81,7 @@ class AppState: ObservableObject {
     func loadProjects() async {
         guard let client else { return }
         do {
-            let fetched = try await client.fetchProjects()
+            let fetched = try await client.listProjects()
             projects = fetched
             // Restore previously selected project from Keychain
             if let savedId = KeychainHelper.getSelectedProjectId(),
@@ -97,7 +98,7 @@ class AppState: ObservableObject {
         let id = projectId ?? selectedProject?.id
         guard let id, let client else { return }
         do {
-            contracts = try await client.fetchContracts(projectId: id)
+            contracts = try await client.getContracts(projectId: id)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -107,17 +108,31 @@ class AppState: ObservableObject {
         let id = projectId ?? selectedProject?.id
         guard let id, let client else { return }
         do {
-            glossaryTerms = try await client.fetchGlossary(projectId: id)
+            glossaryTerms = try await client.getGlossary(projectId: id)
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
+    // Maps local AuditResult findings → SDK AuditResultInput, then returns the inserted count.
     func pushAuditSummary(_ summary: AuditSummary) async throws -> Int {
-        guard let client else { throw ParlanceAPIError.unauthorized }
-        guard let project = selectedProject else { throw ParlanceAPIError.notFound }
-        return try await client.pushAuditResults(
-            projectId: project.id, results: summary.results, filePath: summary.filePath)
+        guard let client else { throw ParlanceError.unauthorized }
+        guard let project = selectedProject else { throw ParlanceError.api(status: 0, message: "No project selected") }
+
+        let items: [ParlanceSDK.AuditResultItem] = summary.results.map { r in
+            ParlanceSDK.AuditResultItem(
+                ruleId: r.ruleId,
+                severity: mapSeverity(r.severity),
+                message: r.message,
+                filePath: summary.filePath
+            )
+        }
+        let input = ParlanceSDK.AuditResultInput(results: items)
+        let response: ParlanceSDK.AuditResult = try await client.pushAuditResults(
+            projectId: project.id,
+            input: input
+        )
+        return response.inserted
     }
 
     func runAuditOnClipboard() {
@@ -128,6 +143,16 @@ class AppState: ObservableObject {
         let engine = SwiftAuditEngine()
         let summary = engine.auditWithSummary(source: text, filePath: "clipboard")
         latestAuditSummary = summary
+    }
+
+    // MARK: - Private helpers
+
+    private func mapSeverity(_ s: Severity) -> ParlanceSDK.AuditSeverity {
+        switch s {
+        case .error:   return .error
+        case .warning: return .warning
+        case .info:    return .info
+        }
     }
 
     private func startAutoRefresh() {

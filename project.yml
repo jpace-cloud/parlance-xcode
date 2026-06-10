@@ -10,6 +10,11 @@ settings:
   SWIFT_VERSION: "5.9"
   MACOSX_DEPLOYMENT_TARGET: "14.0"
 
+packages:
+  ParlanceSDK:
+    url: https://github.com/jpace-cloud/parlance-swift-sdk.git
+    revision: a4a452bd2cd55b96ddf3e679982f037708cee497
+
 schemes:
   Parlance:
     build:
@@ -21,6 +26,16 @@ schemes:
       config: Debug
     archive:
       config: Release
+  ParlanceKitTests:
+    build:
+      targets:
+        ParlanceKit: all
+        ParlanceKitTests: [test]
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - ParlanceKitTests
 
 targets:
   ParlanceKit:
@@ -28,6 +43,9 @@ targets:
     platform: macOS
     sources:
       - path: Sources/ParlanceKit
+    dependencies:
+      - package: ParlanceSDK
+        product: ParlanceSDK
     settings:
       base:
         INFOPLIST_FILE: Sources/ParlanceKit/Info.plist
@@ -36,6 +54,20 @@ targets:
         SWIFT_VERSION: "5.9"
         DEFINES_MODULE: YES
         SKIP_INSTALL: YES
+
+  ParlanceKitTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests/ParlanceKit
+    dependencies:
+      - target: ParlanceKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: business.parlance.xcode.kit.tests
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        SWIFT_VERSION: "5.9"
+        GENERATE_INFOPLIST_FILE: YES
 
   ParlanceEditor:
     type: app-extension

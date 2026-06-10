@@ -7,6 +7,9 @@ struct SettingsView: View {
     @State private var isTesting: Bool = false
     @State private var testResult: TestResult? = nil
 
+    /// Mirrors the same AppStorage key written by ParlanceApp.
+    @AppStorage("appearanceMode") private var appearanceModeRaw = AppearanceMode.dark.rawValue
+
     enum TestResult {
         case success, failure(String)
     }
@@ -30,7 +33,7 @@ struct SettingsView: View {
     private var accountTab: some View {
         Form {
             Section("API Key") {
-                SecureField("Paste your Parlance API key…", text: $apiKeyInput)
+                SecureField("Paste your parlance API key…", text: $apiKeyInput)
                     .textFieldStyle(.roundedBorder)
 
                 HStack(spacing: 8) {
@@ -38,7 +41,7 @@ struct SettingsView: View {
                         Task { await saveAndConnect() }
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(parlancePurple)
+                    .tint(Color.parlance.primary)
                     .disabled(apiKeyInput.isEmpty)
 
                     Button("Test Connection") {
@@ -64,10 +67,10 @@ struct SettingsView: View {
                         switch result {
                         case .success:
                             Label("Connected successfully", systemImage: "checkmark.circle.fill")
-                                .foregroundStyle(.green)
+                                .foregroundStyle(Color.parlance.pass)
                         case .failure(let msg):
                             Label(msg, systemImage: "xmark.circle.fill")
-                                .foregroundStyle(.red)
+                                .foregroundStyle(Color.parlance.fail)
                         }
                     }
                     .font(.caption)
@@ -96,6 +99,16 @@ struct SettingsView: View {
                     .pickerStyle(.menu)
                 }
             }
+
+            Section("Appearance") {
+                Picker("Theme", selection: $appearanceModeRaw) {
+                    ForEach(AppearanceMode.allCases, id: \.rawValue) { mode in
+                        Label(mode.label, systemImage: mode.systemImage)
+                            .tag(mode.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
         }
         .formStyle(.grouped)
         .padding()
@@ -105,13 +118,21 @@ struct SettingsView: View {
 
     private var aboutTab: some View {
         VStack(spacing: 16) {
-            Image("AppIconImage")
+            Image("Parlance_Icon_Dark")
                 .resizable()
-                .frame(width: 64, height: 64)
-                .cornerRadius(14)
+                .renderingMode(.template)
+                .foregroundStyle(Color.parlance.primary)
+                .frame(width: 52, height: 52)
+                .background(
+                    Color.parlance.primary.opacity(0.08)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                )
 
-            Text("Parlance")
-                .font(.system(size: 17, weight: .bold))
+            Image("Parlance_Logo_row")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 22)
+                .accessibilityLabel("parlance")
 
             Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
                 .font(.caption)
@@ -123,10 +144,10 @@ struct SettingsView: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 280)
 
-            if let url = URL(string: "https://parlance.business") {
-                Link("parlance.business", destination: url)
+            if let url = URL(string: "https://parlancelabs.net") {
+                Link("parlancelabs.net", destination: url)
                     .font(.caption)
-                    .foregroundStyle(parlancePurple)
+                    .foregroundStyle(Color.parlance.primary)
             }
         }
         .padding()
@@ -137,14 +158,16 @@ struct SettingsView: View {
 
     private func saveAndConnect() async {
         await appState.saveAPIKey(apiKeyInput)
-        testResult = appState.isConnected ? .success : .failure(appState.errorMessage ?? "Connection failed")
+        testResult = appState.isConnected
+            ? .success
+            : .failure(appState.errorMessage ?? "Connection failed")
     }
 
     private func testConnection() async {
         isTesting = true
         testResult = nil
         let key = apiKeyInput
-        let client = ParlanceAPIClient(apiKey: key)
+        let client = ParlanceClientProvider.make(apiKey: key)
         do {
             _ = try await client.testConnection()
             testResult = .success

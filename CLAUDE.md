@@ -36,7 +36,7 @@ test/               SampleView, BadFormView, GoodView (intentional issues)
 10. **Accessibility order** (WCAG 1.3.2-A) — custom accessibilitySortPriority flagged for review
 
 ## API
-- Base URL: `https://api.parlance.business`
+- Base URL: `https://api.parlancelabs.net`
 - Auth: `Authorization: Bearer <key>`
 - Client header: `X-Parlance-Client: xcode-extension/{version}`
 - API key stored in macOS Keychain (service: `business.parlance.xcode`)
