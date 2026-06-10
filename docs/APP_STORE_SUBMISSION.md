@@ -181,7 +181,7 @@ Answers below are derived from the **actual data flow** in the code, not assumpt
   accessibility label") and `filePath` is the **literal string `"xcode-file"`** — the
   real file name and path are **not** sent. **Your source code is not transmitted.**
 - The upload goes over **HTTPS** to the parlance REST API
-  (`https://api.parlance.business`; live host `https://parlance-api.vercel.app`,
+  (`https://api.parlancelabs.net`; live host `https://parlance-api.vercel.app`,
   base path `/api/v1`), authenticated with the user's **API key** as
   `Authorization: Bearer …`, plus an `X-Parlance-Client: xcode-extension/<version>`
   header.
