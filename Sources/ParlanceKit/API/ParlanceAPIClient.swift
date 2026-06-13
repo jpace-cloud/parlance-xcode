@@ -44,7 +44,7 @@ public class ParlanceAPIClient {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
     }
 
-    public init(apiKey: String, baseURL: String = "https://api.parlance.business") {
+    public init(apiKey: String, baseURL: String = "https://api.parlancelabs.net") {
         self.apiKey = apiKey
         self.baseURL = baseURL
         self.session = URLSession(configuration: .default)

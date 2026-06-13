@@ -113,7 +113,7 @@ struct SettingsView: View {
             Text("Parlance")
                 .font(.system(size: 17, weight: .bold))
 
-            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
+            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0")")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -123,8 +123,8 @@ struct SettingsView: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 280)
 
-            if let url = URL(string: "https://parlance.business") {
-                Link("parlance.business", destination: url)
+            if let url = URL(string: "https://parlancelabs.net") {
+                Link("parlancelabs.net", destination: url)
                     .font(.caption)
                     .foregroundStyle(parlancePurple)
             }
