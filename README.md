@@ -115,13 +115,15 @@ Data refreshes automatically every 5 minutes when connected. Use "Sync now" to r
 
 ## Test Files
 
-Three sample views in `test/` demonstrate issues and correct patterns:
+Sample views in `test/` demonstrate issues and correct patterns:
 
 - `test/SampleView.swift` — mixed: some issues, some correct patterns
 - `test/BadFormView.swift` — intentionally broken form with multiple failures
 - `test/GoodView.swift` — fully accessible reference implementation
+- `test/AllRulesViolations.swift` — one isolated view per rule; trips **all 10 rules** (11 findings)
+- `test/AllRulesClean.swift` — the accessible counterpart; should report **0 findings**
 
-Open any of these in Xcode and run **Editor → Parlance → Run Accessibility Audit** to see the output.
+Open any of these in Xcode and run **Editor → Parlance → Run Accessibility Audit** to see the output. (`AllRulesViolations`/`AllRulesClean` were verified against the audit engine: 11 findings vs 0.)
 
 ## Project Structure
 
