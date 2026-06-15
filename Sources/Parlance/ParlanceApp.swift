@@ -12,7 +12,12 @@ struct ParlanceApp: App {
     }
 
     var body: some Scene {
-        MenuBarExtra("Parlance", image: "Parlance_Icon_Dark") {
+        // Menu-bar glyph: an SF Symbol, which the system always renders at the
+        // correct menu-bar size and as a light/dark-adaptive template. The brand
+        // asset (Parlance_Icon_Dark) is 57×48 pt — sized for larger UI — and
+        // MenuBarExtra does not honour a .frame() to shrink it, so it rendered
+        // oversized. checkmark.shield matches the icon documented in the README.
+        MenuBarExtra("Parlance", systemImage: "checkmark.shield") {
             MenuBarView()
                 .environmentObject(appState)
                 .preferredColorScheme(resolvedColorScheme)
